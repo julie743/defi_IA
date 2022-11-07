@@ -119,5 +119,5 @@ def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
     
     X_train_renorm.drop('avatar_id',axis=1,inplace=True)
     X_test_renorm.drop('avatar_id',axis=1,inplace=True)
-    return X_train,Y_train,X_test
+    return X_train_renorm,Y_train,X_test_renorm
     
