@@ -9,10 +9,11 @@ import numpy as np
 import pandas as pd
 import os
 
+PATH_DATA = '../../data'
+
 def load_data() : 
-    path = '../results_requests'
+    path = os.path.join(PATH_DATA,'results_requests')
     directories = os.listdir(path)
-    directories.remove('all_requests')
     data = pd.DataFrame()
     for d in directories :
         files = os.listdir(os.path.join(path,d))
@@ -24,8 +25,8 @@ def load_data() :
     return data, Y
 
 def add_hotel_features(data) :
-    path = '../results_requests'
-    features_hotels = pd.read_csv(os.path.join(path,'all_requests','features_hotels.csv'))
+    path = os.path.join(PATH_DATA,'all_data')
+    features_hotels = pd.read_csv(os.path.join(path,'features_hotels.csv'))
     
     # take hotels in the order in which they are found in the request dataset and concatenate the two dataframes
     hotels_in_order = features_hotels.loc[data['hotel_id']]
@@ -46,8 +47,7 @@ def add_hotel_features(data) :
     hotels_in_order.reset_index(inplace=True)
     data = pd.concat([data,hotels_in_order],axis=1)
     data.drop('index',axis=1,inplace=True)
-    data.to_csv(os.path.join(path,'all_requests','requetes_total.csv'),index=False)
-    
+    data.to_csv(os.path.join(path,'requetes_total.csv'),index=False)
     return data
 
 def var_types(data): 
@@ -61,7 +61,7 @@ def main_load_data():
     var_quant,var_quali = var_types(data)
     return data,Y,var_quant,var_quali
 
-data,Y,var_quant,var_quali = main_load_data()
+#data,Y,var_quant,var_quali = main_load_data()
     
     
     

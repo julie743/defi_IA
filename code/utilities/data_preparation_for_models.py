@@ -7,11 +7,9 @@ Created on Mon Nov  7 18:58:04 2022
 """
 import numpy as np
 import pandas as pd
-import os
-from math import log,sqrt,exp
+from math import log,sqrt
 
-import random
-from sklearn.model_selection import train_test_split  
+import random 
 from sklearn.preprocessing import StandardScaler 
 
 def transform_Y(Y) :
@@ -115,7 +113,7 @@ def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
     X_train_renorm, scalerX = renorm_var_quant(X_train,var_quant_new,var_dum) # renormalize
     
     # Prepare X_test : --------------------------------------------------------
-    data_test = pd.read_csv('../Test_set_analysis/test_set_complet.csv')
+    data_test = pd.read_csv('../../data/all_data/test_set_complet.csv')
     X_test,_,_ = prepare_input_data(data_test,var_quant,var_quali)
     X_test_renorm, _ = renorm_var_quant(X_test,var_quant_new,var_dum)
     
