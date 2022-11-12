@@ -9,9 +9,11 @@ import numpy as np
 import pandas as pd
 from math import log,sqrt
 import copy
+import os
 
 import random 
 from sklearn.preprocessing import StandardScaler 
+from data_loading import PATH_DATA
 
 def transform_Y(Y) :
     # Transform the data according to the distribution identified when making
@@ -98,7 +100,18 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali) :
       
     X_train_renorm.drop('avatar_id',axis=1,inplace=True)
     X_vali_renorm.drop('avatar_id',axis=1,inplace=True)
-    return X_train_renorm,Y_train,X_vali_renorm,Y_vali
+    
+    # charge test set 
+    data_test = pd.read_csv(os.path.join(PATH_DATA,'all_data','test_set_complet.csv'))
+    X_test,_,_ = prepare_input_data(data_test,var_quant_new,var_quali)
+    # some columns that are in the training set are not in the test set because
+    #  the test set does not contain all the hotel_id for example => we had 
+    # them all set up to 0
+    missing_col = [c for c in X_train_renorm.columns if not c in X_test.columns] 
+    X_test[missing_col] = 0
+    X_test_renorm, _ = renorm_var_quant(X_test,var_quant_last,var_dum)
+    X_test_renorm.drop('avatar_id',axis=1,inplace=True)
+    return X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm
 
 
 def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
@@ -109,7 +122,7 @@ def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
     X_train_renorm, scalerX = renorm_var_quant(X_train,var_quant_new,var_dum) # renormalize
     
     # Prepare X_test : --------------------------------------------------------
-    data_test = pd.read_csv('../../data/all_data/test_set_complet.csv')
+    data_test = pd.read_csv(os.path.join(PATH_DATA,'all_data','test_set_complet.csv'))
     X_test,_,_ = prepare_input_data(data_test,var_quant,var_quali)
     # some columns that are in the training set are not in the test set because
     #  the test set does not contain all the hotel_id for example => we had 

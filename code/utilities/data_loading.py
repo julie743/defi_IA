@@ -9,7 +9,8 @@ import numpy as np
 import pandas as pd
 import os
 
-PATH_DATA = '../../data'
+PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_DATA = os.path.join(PATH_PROJECT,'data')
 
 def load_data() : 
     path = os.path.join(PATH_DATA,'results_requests')
@@ -62,7 +63,7 @@ def main_load_data():
     var_quant,var_quali = var_types(data)
     return data,Y,var_quant,var_quali
 
-data,Y,var_quant,var_quali = main_load_data()
+#data,Y,var_quant,var_quali = main_load_data()
     
     
     
