@@ -52,7 +52,8 @@ def add_hotel_features(data) :
 
 def var_types(data): 
     var_quant = ["date","stock"]
-    var_quali = ["city","language", "mobile","group","brand","parking","pool","children_policy"]
+    #var_quali = ["city","language", "mobile","group","brand","parking","pool","children_policy"]
+    var_quali = ["city","language", "mobile",'hotel_id',"group","brand","parking","pool","children_policy"]
     return var_quant,var_quali
 
 def main_load_data():
@@ -61,7 +62,7 @@ def main_load_data():
     var_quant,var_quali = var_types(data)
     return data,Y,var_quant,var_quali
 
-#data,Y,var_quant,var_quali = main_load_data()
+data,Y,var_quant,var_quali = main_load_data()
     
     
     
