@@ -9,3 +9,7 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 - Arbre de regression : 30.78
 - Foret aléatoire : 28.21
 - Foret aléatoire optimisée : 28.20
+
+Questions : 
+- Target encoder : overfit ? 
+- Tester target encoder codé à la main ou par Python 
