@@ -10,29 +10,40 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.metrics import r2_score
+from data_loading import PATH_PROJECT
+import os
 
-def plot_pred_obs(Y_true,Y_pred): 
+PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
+
+def plot_pred_obs(Y_true,Y_pred,model_name): 
     plt.figure(figsize=(5,5))
     plt.plot(Y_true,Y_pred,"o",markersize = 0.4)
-    plt.xlabel("prix prédit")
-    plt.ylabel("prix observé")
+    plt.xlabel("predicted price")
+    plt.ylabel("observed price")
+    plt.title("prediction " + model_name)
+    file_name = 'prediction_'+model_name.replace(' ', '_')+'.png'
+    plt.savefig(os.path.join(PATH_IMAGE,file_name))
     plt.show()
 
-def scatterplot_residuals(Y_true,Y_pred):
+def scatterplot_residuals(Y_true,Y_pred,model_name):
     plt.figure(figsize=(5,5))
     plt.plot(Y_pred,Y_true-Y_pred,"o",markersize = 0.4)
-    plt.xlabel(u"valeurs prédites")
-    plt.ylabel(u"Résidus")
-    plt.title("Residus pénalité L1 Lasso") 
+    plt.xlabel(u"predicted values")
+    plt.ylabel(u"residuals")
+    plt.title("Residuals " + model_name) 
     plt.hlines(0,0,3)
+    file_name = 'residuals_'+model_name.replace(' ', '_')+'.png'
+    plt.savefig(os.path.join(PATH_IMAGE,file_name))
     plt.show()
     
-def histogram_residuals(Y_true,Y_pred):
+def histogram_residuals(Y_true,Y_pred, model_name):
     plt.figure(figsize=(10,5))
     plt.hist(Y_true-Y_pred,bins=20)
-    plt.title('histogramme des résidus')
-    plt.xlabel('valeur des résidus')
-    plt.ylabel('nombre de prédictions')
+    plt.title('Histogram of residuals ' + model_name)
+    plt.xlabel('residuals values')
+    plt.ylabel('number of predictions')
+    file_name = 'histogram_residuals_'+model_name.replace(' ', '_')+'.png'
+    plt.savefig(os.path.join(PATH_IMAGE,file_name))
     plt.show()
     
 def compute_scores(Y_true,Y_pred):

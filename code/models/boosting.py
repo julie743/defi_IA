@@ -33,13 +33,7 @@ import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
 
-params = {
-    "n_estimators": 500,
-    "max_depth": 4,
-    "min_samples_split": 5,
-    "learning_rate": 0.01,
-    "loss": "squared_error",
-}
+
 def boosting(X_train,Y_train,X_vali,Y_vali,params) : 
     reg = GradientBoostingRegressor(**params)
     reg.fit(X_train, Y_train)
@@ -72,7 +66,7 @@ def boosting(X_train,Y_train,X_vali,Y_vali,params) :
     
 def Optimize_boosting(X_train, Y_train) :
     tps0=time.perf_counter()
-    param=[{"learning_rate":[0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1], "max_depth": np.arange(2,20,3)}]#optimisation de m
+    param=[{"learning_rate":[0.01,0.05,0.1,0.2,0.3,0.4,0.5], "max_depth": np.arange(2,20,3)}]#optimisation de m
     rf= GridSearchCV(GradientBoostingRegressor(n_estimators=500),param,cv=5,n_jobs=-1)
     boostOpt=rf.fit(X_train, Y_train)
     tps1=time.perf_counter()
@@ -97,7 +91,7 @@ def Model_boosting(X_train,Y_train,param_opt):
     boosting_opt = GradientBoostingRegressor(**all_param)
     boosting_opt.fit(X_train, Y_train)
     tps1=time.perf_counter()
-    print("Temps execution en mn :",(tps1 - tps0))
+    print("Temps execution en sec :",(tps1 - tps0))
     return boosting_opt
 
 def Predict_validation_set(X_vali,Y_vali,boosting_opt,model_name):
@@ -113,16 +107,27 @@ def Predict_validation_set(X_vali,Y_vali,boosting_opt,model_name):
 def Predict_test_set(X_test,boosting_opt):
     prev_test = boosting_opt.predict(X_test)
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
-    download_pred_Xtest(np.array(prev_test).flatten(),'prediction_regression_tree2')
+    download_pred_Xtest(np.array(prev_test).flatten(),'prediction_boosting')
 
 
-def main_boosting(list_max_depth) :
+def main_boosting(param_opt=0) :
     model_name = 'boosting'
     data,Y,var_quant,var_quali = DL.main_load_data()
     X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali)
-    param_opt = Optimize_boosting(X_train_renorm, Y_train)
+    if param_opt == 0 :
+        param_opt = Optimize_boosting(X_train_renorm, Y_train)
     boost_opt = Model_boosting(X_train_renorm, Y_train, param_opt)
     Predict_validation_set(X_vali_renorm,Y_vali,boost_opt,model_name)
     Predict_test_set(X_test_renorm,boost_opt)
 
-    
+data,Y,var_quant,var_quali = DL.main_load_data()
+
+params = {
+    "n_estimators": 500,
+    "max_depth": 10,
+    "min_samples_split": 5,
+    "learning_rate": 0.1,
+    "loss": "squared_error",
+}
+
+main_boosting(param_opt=params)

@@ -13,6 +13,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LassoCV, LassoLarsCV
 from itertools import cycle
 import pandas as pd
+import time
 
 PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
@@ -24,17 +25,23 @@ from download_prediction import download_pred_Xtest
 
 # modele regression linéaire
 def Model_reg(X_train,Y_train,alpha=0):
+    tps0=time.perf_counter()
     regLin = linear_model.Lasso(alpha)
     regLin.fit(X_train,Y_train)
+    tps1=time.perf_counter()
+    print("Temps execution en sec :",(tps1 - tps0))
     return regLin
 
 def Optimize_regLasso(X_train,Y_train,list_param):
+    tps0=time.perf_counter()
     param=[{"alpha":list_param}]
     regLasso = GridSearchCV(linear_model.Lasso(), param,cv=5,n_jobs=-1)
     regLassOpt=regLasso.fit(X_train, Y_train)
     # paramètre optimal
     alpha_opt = regLassOpt.best_params_["alpha"]
     print("Meilleur R2 = %f, Meilleur paramètre = %s" % (regLassOpt.best_score_,regLassOpt.best_params_))
+    tps1=time.perf_counter()
+    print("Temps execution en sec :",(tps1 - tps0))
     return alpha_opt
 
 # prediction échantillon de validation 
@@ -73,4 +80,4 @@ def main_Linear():
     scores = Predict_validation_set(X_vali_renorm,Y_vali,regLasso,model_name)
     Predict_test_set(X_test_renorm,regLasso)
     
-    
+main_Linear()    

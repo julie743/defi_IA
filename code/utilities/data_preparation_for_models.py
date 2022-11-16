@@ -41,7 +41,7 @@ def prepare_input_data(data,var_quant,var_quali):
     # 2. qualitative variables : 
     for var in var_quali :
         data[var]=pd.Categorical(data[var],ordered=False)
-    X_dum = pd.get_dummies(data[var_quali],drop_first=True)
+    X_dum = pd.get_dummies(data[var_quali],drop_first=True) # A CHANGER AVEC LE TARGET ENCODEUR
     var_dum = X_dum.columns
     
     #X = pd.concat([data[['order_requests','avatar_id','hotel_id']],X_quant,X_dum],axis=1)
@@ -104,16 +104,20 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali) :
     # charge test set 
     data_test = pd.read_csv(os.path.join(PATH_DATA,'all_data','test_set_complet.csv'))
     X_test,_,_ = prepare_input_data(data_test,var_quant_new,var_quali)
+    
+    '''
     # some columns that are in the training set are not in the test set because
     #  the test set does not contain all the hotel_id for example => we had 
     # them all set up to 0
     missing_col = [c for c in X_train_renorm.columns if not c in X_test.columns] 
     X_test[missing_col] = 0
+    '''
     X_test_renorm, _ = renorm_var_quant(X_test,var_quant_last,var_dum)
     X_test_renorm.drop('avatar_id',axis=1,inplace=True)
+    
     return X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm
 
-
+'''
 def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
     # Prepare X_train : -------------------------------------------------------
     Y_train = transform_Y(Y)
@@ -134,4 +138,4 @@ def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
     X_train_renorm.drop('avatar_id',axis=1,inplace=True)
     X_test_renorm.drop('avatar_id',axis=1,inplace=True)
     return X_train_renorm,Y_train,X_test_renorm
-    
+'''    
