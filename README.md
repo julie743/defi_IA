@@ -11,5 +11,5 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 - Foret aléatoire optimisée : 28.20
 
 Questions : 
-- Target encoder : overfit ? 
+- Target encoder : overfit ? ==> https://maxhalford.github.io/blog/target-encoding/
 - Tester target encoder codé à la main ou par Python 
