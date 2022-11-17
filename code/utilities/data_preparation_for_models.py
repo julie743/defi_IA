@@ -14,6 +14,7 @@ import os
 import random 
 from sklearn.preprocessing import StandardScaler 
 from data_loading import PATH_DATA
+from category_encoders import TargetEncoder
 
 def transform_Y(Y) :
     # Transform the data according to the distribution identified when making
@@ -29,24 +30,38 @@ def define_order_requests(data,var_quant) :
     var_quant_new.append('order_requests')
     return data, var_quant_new
 
-def prepare_input_data(data,var_quant,var_quali): 
-    # 1. quantitative variables : 
-    # Transform the data according to the distirbution identified when making
-    # data analysis of the requests
-    X_quant = data[var_quant]
-    X_quant["stock_mod"]=X_quant["stock"].map(lambda x: sqrt(x))
-    X_quant.drop("stock",axis=1,inplace=True)
-    var_quant_new = ["date","stock_mod",'order_requests']
+def target_encoding_all(data, quantitative_vars, encoder_list = {}, Y=0) : 
     
-    # 2. qualitative variables : 
-    for var in var_quali :
-        data[var]=pd.Categorical(data[var],ordered=False)
-    X_dum = pd.get_dummies(data[var_quali],drop_first=True) # A CHANGER AVEC LE TARGET ENCODEUR
-    var_dum = X_dum.columns
+    '''
+    ==> Performs the target encoding on several variables using the Python library
     
-    #X = pd.concat([data[['order_requests','avatar_id','hotel_id']],X_quant,X_dum],axis=1)
-    X = pd.concat([data[['avatar_id']],X_quant,X_dum],axis=1)
-    return X,var_quant_new,var_dum
+    input : takes a list of all the quantitative variables we wish to encode ; data : Y (the label)
+    
+    Mdifies the data by adding a new column with the target code for 
+    each modality of the quantitative variable
+    '''
+    new_var_quali_to_encode  = []
+    if len(encoder_list) == 0 : # case when we treat the training data
+        for var in quantitative_vars : 
+            encoder = TargetEncoder()
+            new_var = var + "_target"
+            new_var_quali_to_encode.append(var + "_target")
+            
+            if data[var].dtype != 'int64' : 
+                encoder.fit(data[var], pd.DataFrame(Y)) 
+            else : 
+                encoder.fit((data[var]).astype(str), pd.DataFrame(Y)) 
+            data[new_var] = encoder.transform(data[var])
+            encoder_list[new_var] = encoder
+    
+    else : # case when we treat the test data : re-use the encoder of the training dataset
+        for var in quantitative_vars : 
+            new_var = var + "_target"
+            new_var_quali_to_encode.append(new_var)
+            encoder = encoder_list[new_var]
+            data[new_var] = encoder.transform(data[var]) 
+        
+    return new_var_quali_to_encode, encoder_list
 
 def renorm_var_quant(X,var_quant,var_dum,scaler=0) :
     # Renormalization of quantitative variables : 
@@ -57,6 +72,32 @@ def renorm_var_quant(X,var_quant,var_dum,scaler=0) :
     #X = pd.concat([X[['order_requests','avatar_id','hotel_id']], X_quant, X[var_dum]],axis=1)
     X = pd.concat([X[['avatar_id']], X_quant, X[var_dum]],axis=1)
     return X,scaler
+
+def prepare_input_data(data,var_quant,var_quali,var_quali_to_encode, encoder_list = {}, Y=0): 
+    # 1. qualitative variables : 
+    for var in var_quali :
+        data[var]=pd.Categorical(data[var],ordered=False)
+    X_dum = pd.get_dummies(data[var_quali],drop_first=True) # A CHANGER AVEC LE TARGET ENCODEUR
+    var_dum = X_dum.columns
+    
+    # 2. qualitative variables that must be encoded with the target-encoding
+    new_var_quali_to_encode, encoder_list = target_encoding_all(data, var_quali_to_encode, encoder_list, Y)
+    var_quant_new = copy.deepcopy(var_quant)
+    var_quant_new.extend(new_var_quali_to_encode)
+
+    # 3. quantitative variables : 
+    # Transform the data according to the distribution identified when making
+    # data analysis of the requests
+    X_quant = data[var_quant_new]
+    X_quant["stock_mod"]=X_quant["stock"].map(lambda x: sqrt(x))
+    X_quant.drop("stock",axis=1,inplace=True)
+    var_quant_new.remove("stock")
+    var_quant_new.extend(["stock_mod"])
+    
+    #X = pd.concat([data[['order_requests','avatar_id','hotel_id']],X_quant,X_dum],axis=1)
+    X = pd.concat([data[['avatar_id']],X_quant,X_dum],axis=1)
+    
+    return X,var_quant_new,var_dum, encoder_list
 
 def split_train_vali(X,Y):
     # 20% des avatar_ID seront dans le test set et 80% dans le train set
@@ -81,7 +122,7 @@ def split_train_vali(X,Y):
     return X_train,X_vali,Y_train,Y_vali
     
 
-def main_prepare_train_vali_data(data,Y,var_quant,var_quali) :
+def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode) :
     # split train/validation :
     Y_mod = transform_Y(Y)
     X_train,X_vali,Y_train,Y_vali = split_train_vali(data,Y_mod)
@@ -91,8 +132,8 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali) :
     X_vali,_ = define_order_requests(X_vali,var_quant)
     
     # Prepare input and output data : 
-    X_train,var_quant_last,var_dum =  prepare_input_data(X_train,var_quant_new,var_quali)
-    X_vali,_,_ =  prepare_input_data(X_vali,var_quant_new,var_quali)
+    X_train,var_quant_last,var_dum,encoder_list =  prepare_input_data(X_train,var_quant_new,var_quali,var_quali_to_encode, encoder_list = {}, Y=Y_train)
+    X_vali,_,_,_ =  prepare_input_data(X_vali,var_quant_new,var_quali,var_quali_to_encode, encoder_list = encoder_list,Y = Y_vali)
     
     # renormalize
     X_train_renorm, scalerX = renorm_var_quant(X_train,var_quant_last,var_dum)
@@ -103,7 +144,8 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali) :
     
     # charge test set 
     data_test = pd.read_csv(os.path.join(PATH_DATA,'all_data','test_set_complet.csv'))
-    X_test,_,_ = prepare_input_data(data_test,var_quant_new,var_quali)
+    var_quant.append('order_requests')
+    X_test,_,_,_ = prepare_input_data(data_test,var_quant_new,var_quali,var_quali_to_encode, encoder_list = encoder_list, Y =0)
     
     '''
     # some columns that are in the training set are not in the test set because
@@ -116,6 +158,8 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali) :
     X_test_renorm.drop('avatar_id',axis=1,inplace=True)
     
     return X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm
+
+#X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
 
 '''
 def main_prepare_train_test_data(data,Y,var_quant,var_quali) :
