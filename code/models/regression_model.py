@@ -14,8 +14,10 @@ from sklearn.linear_model import LassoCV, LassoLarsCV
 from itertools import cycle
 import pandas as pd
 import time
+import matplotlib.pyplot as plt
 
 PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)
 import data_loading as DL
@@ -29,7 +31,7 @@ def Model_reg(X_train,Y_train,alpha=0):
     regLin = linear_model.Lasso(alpha)
     regLin.fit(X_train,Y_train)
     tps1=time.perf_counter()
-    print("Temps execution en sec :",(tps1 - tps0))
+    print("Temps execution en sec pour l'entrainement :",(tps1 - tps0))
     return regLin
 
 def Optimize_regLasso(X_train,Y_train,list_param):
@@ -41,7 +43,7 @@ def Optimize_regLasso(X_train,Y_train,list_param):
     alpha_opt = regLassOpt.best_params_["alpha"]
     print("Meilleur R2 = %f, Meilleur paramètre = %s" % (regLassOpt.best_score_,regLassOpt.best_params_))
     tps1=time.perf_counter()
-    print("Temps execution en sec :",(tps1 - tps0))
+    print("Temps execution en sec pour l'optimisation ':",(tps1 - tps0))
     return alpha_opt
 
 # prediction échantillon de validation 
@@ -56,28 +58,46 @@ def Predict_validation_set(X_vali,Y_vali,model_opt,model_name):
     return scores
 
 # prediction échantillon de test
-def Predict_test_set(X_test,model_opt):
+def Predict_test_set(X_test,model_opt,model_name):
     prev_test = model_opt.predict(X_test)
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
-    download_pred_Xtest(np.array(prev_test).flatten(),'regression_model')
+    download_pred_Xtest(np.array(prev_test).flatten(),model_name)
+
+def plot_lasso_coeff(regLasso,X_train_renorm,model_name):
+    coef = pd.Series(regLasso.coef_, index = X_train_renorm.columns)
+    print("Lasso conserve " + str(sum(coef != 0)) + 
+      " variables et en supprime " +  str(sum(coef == 0)))
+    imp_coef = coef.sort_values()
+    plt.figure()
+    plt.rcParams['figure.figsize'] = (8.0, 10.0)
+    imp_coef.plot(kind = "barh")
+    plt.title(u"Coefficients du modèle lasso")
+    sub_directory = os.path.join(PATH_IMAGE,model_name.replace(' ', '_'))
+    PA.mkdir(sub_directory)
+    file_name = 'prediction_'+model_name.replace(' ', '_')+'.png'
+    plt.savefig(os.path.join(sub_directory,file_name))
+    plt.show()
 
 def main_Linear():
-    data,Y,var_quant,var_quali = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali)
-    model_name = 'regression model'
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    model_name = 'linear regression'
     
     regLin = Model_reg(X_train_renorm,Y_train)
     scores = Predict_validation_set(X_vali_renorm,Y_vali,regLin,model_name)
     Predict_test_set(X_test_renorm,regLin)
     
-def main_Linear():
-    data,Y,var_quant,var_quali = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali)
+def main_Lasso():
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'Lasso regression model'
     
-    alpha_opt = Optimize_regLasso(X_train_renorm,Y_train,[0.05,0.1,0.2,0.3,0.4])
+    alpha_opt = Optimize_regLasso(X_train_renorm,Y_train,[0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2])
     regLasso = Model_reg(X_train_renorm,Y_train,alpha_opt)
-    scores = Predict_validation_set(X_vali_renorm,Y_vali,regLasso,model_name)
-    Predict_test_set(X_test_renorm,regLasso)
     
-main_Linear()    
+    plot_lasso_coeff(regLasso,X_train_renorm,model_name) # plot coeff 
+    
+    scores = Predict_validation_set(X_vali_renorm,Y_vali,regLasso,model_name)
+    Predict_test_set(X_test_renorm,regLasso,model_name)
+    
+#main_Lasso()    
