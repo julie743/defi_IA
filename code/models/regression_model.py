@@ -27,6 +27,24 @@ from download_prediction import download_pred_Xtest
 
 # modele regression linéaire
 def Model_reg(X_train,Y_train,alpha=0):
+    '''
+    Create regression model with given alpha and fit it on the training data
+
+    Parameters
+    ----------
+    X_train : pandas.dataframe
+        training dataset input.
+    Y_train : pandas.dataframe
+        training dataset output.
+    alpha : float
+        Parameter of Lasso penalization. default = 0 for simple linear regression
+
+    Returns
+    -------
+    regLin : regression model fit on the data
+
+    '''
+    
     tps0=time.perf_counter()
     regLin = linear_model.Lasso(alpha)
     regLin.fit(X_train,Y_train)
@@ -35,6 +53,26 @@ def Model_reg(X_train,Y_train,alpha=0):
     return regLin
 
 def Optimize_regLasso(X_train,Y_train,list_param):
+    '''
+    Perfom GridSearchCV to find the best alpha (Lasso penalization term)
+
+
+    Parameters
+    ----------
+    X_train : pandas.dataframe
+        training dataset input.
+    Y_train : pandas.dataframe
+        training dataset output.
+    list_param : list of floats
+        possible values of alpha.
+
+    Returns
+    -------
+    alpha_opt : float
+        optimal value of alpha.
+
+    '''
+    
     tps0=time.perf_counter()
     param=[{"alpha":list_param}]
     regLasso = GridSearchCV(linear_model.Lasso(), param,cv=5,n_jobs=-1)
@@ -48,6 +86,27 @@ def Optimize_regLasso(X_train,Y_train,list_param):
 
 # prediction échantillon de validation 
 def Predict_validation_set(X_vali,Y_vali,model_opt,model_name):
+    ''''
+    Predict the validation set using an optimal model. Plots and records
+    the results
+
+    Parameters
+    ----------
+    X_vali : pandas.dataframe
+        validation dataset input.
+    Y_vali : pandas.dataframe
+        validation dataset output.
+    model_opt : optimal model fit on the training data
+    model_name : string
+        => For plots and recording files.
+        
+    Returns
+    -------
+    scores : dic
+        dictionary of metrics computed on the validation data (MAE, RMSE, R2)
+
+    '''
+    
     prev=model_opt.predict(X_vali)
     prev_detransfo = np.exp(prev)
     Y_vali_detransfo = np.exp(Y_vali)
@@ -59,11 +118,43 @@ def Predict_validation_set(X_vali,Y_vali,model_opt,model_name):
 
 # prediction échantillon de test
 def Predict_test_set(X_test,model_opt,model_name):
+    '''
+    Predict the test set and record the results 
+
+    Parameters
+    ----------
+    X_test : pandas.dataframe
+        test dataset input.
+    model_opt : optimal model fit on the training data
+    model_name : string
+        => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
     prev_test = model_opt.predict(X_test)
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
     download_pred_Xtest(np.array(prev_test).flatten(),model_name)
 
 def plot_lasso_coeff(regLasso,X_train_renorm,model_name):
+    '''
+    Plot Lasso coefficient by order of importance
+
+    Parameters
+    ----------
+    regLasso : Lasso model fit on the training data
+    X_train_renorm : pandas.dataframe
+        training dataset input.
+    model_name : string
+        => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
     coef = pd.Series(regLasso.coef_, index = X_train_renorm.columns)
     print("Lasso conserve " + str(sum(coef != 0)) + 
       " variables et en supprime " +  str(sum(coef == 0)))
@@ -79,6 +170,20 @@ def plot_lasso_coeff(regLasso,X_train_renorm,model_name):
     plt.show()
 
 def main_Linear():
+    '''
+    main function : calls the previous functions in the correct order to 
+    perform all the computations for the linear regression
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None.
+
+    '''
+    
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
     X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'linear regression'
@@ -88,6 +193,20 @@ def main_Linear():
     Predict_test_set(X_test_renorm,regLin)
     
 def main_Lasso():
+    '''
+    main function : calls the previous functions in the correct order to 
+    perform all the computations for the Lasso regression
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None.
+
+    '''
+    
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
     X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'Lasso regression model'

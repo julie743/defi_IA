@@ -21,10 +21,43 @@ Input :
   - directory : name of the directory to create
 '''
 def mkdir(directory) : 
+    '''
+    check if a directory exists, create it otherwise
+
+    Parameters
+    ----------
+    directory : string
+        path of the directory.
+
+    Returns
+    -------
+    None.
+
+    '''
+    
+    
     if not os.path.exists(directory):
         os.makedirs(directory)
 
 def plot_pred_obs(Y_true,Y_pred,model_name): 
+    '''
+    plot the graph of predictions against true values
+
+    Parameters
+    ----------
+    Y_true : np.darray
+        real ouput data (price) of the validation set.
+    Y_pred : np.darray
+        predicted ouput data (price) of the validation set..
+    model_name : string
+        => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
+    
     plt.figure(figsize=(5,5))
     plt.plot(Y_true,Y_pred,"o",markersize = 0.4)
     plt.xlabel("predicted price")
@@ -37,6 +70,24 @@ def plot_pred_obs(Y_true,Y_pred,model_name):
     plt.show()
 
 def scatterplot_residuals(Y_true,Y_pred,model_name):
+    '''
+    plot the graph of residuals against predicted values
+
+    Parameters
+    ----------
+   Y_true : np.darray
+       real ouput data (price) of the validation set.
+   Y_pred : np.darray
+       predicted ouput data (price) of the validation set..
+   model_name : string
+       => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
+    
     plt.figure(figsize=(5,5))
     plt.plot(Y_pred,Y_true-Y_pred,"o",markersize = 0.4)
     plt.xlabel(u"predicted values")
@@ -50,6 +101,25 @@ def scatterplot_residuals(Y_true,Y_pred,model_name):
     plt.show()
     
 def histogram_residuals(Y_true,Y_pred, model_name):
+    '''
+    plot the histogram of residuals 
+
+    Parameters
+    ----------
+   Y_true : np.darray
+       real ouput data (price) of the validation set.
+   Y_pred : np.darray
+       predicted ouput data (price) of the validation set..
+   model_name : string
+       => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
+    
+    
     plt.figure(figsize=(10,5))
     plt.hist(Y_true-Y_pred,bins=20)
     plt.title('Histogram of residuals ' + model_name)
@@ -62,6 +132,24 @@ def histogram_residuals(Y_true,Y_pred, model_name):
     plt.show()
     
 def compute_scores(Y_true,Y_pred):
+    '''
+    compute and printmetrics on the prediction of the validation set
+    Parameters
+    ----------
+   Y_true : np.darray
+       real ouput data (price) of the validation set.
+   Y_pred : np.darray
+       predicted ouput data (price) of the validation set..
+   model_name : string
+       => For plots and recording files.
+
+    Returns
+    -------
+    dic : dictionary of the obtained scores on the prediction 
+    
+    '''
+    
+    
     dic = {'rmse': np.sqrt(mean_squared_error(Y_pred,Y_true)),
            'mae' : mean_absolute_error(Y_pred,Y_true),
            'r2'  : r2_score(Y_pred,Y_true) }

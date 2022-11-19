@@ -13,6 +13,19 @@ PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
 PATH_DATA = os.path.join(PATH_PROJECT,'data')
 
 def load_data() : 
+    
+    '''
+    load the request data
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    data : pandas.DataFrame
+        dataframe of the requests data
+
+    '''
     path = os.path.join(PATH_DATA,'results_requests')
     directories = os.listdir(path)
     data = pd.DataFrame()
@@ -26,6 +39,28 @@ def load_data() :
     return data, Y
 
 def add_hotel_features(data) :
+    '''
+    Add hotel features to every line of the dataset
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        raw dataframe of the requests data
+
+    Raises
+    ------
+    Exception
+        If the city given by the result of the request is not the same as the 
+        city requested by the user, it raises an exception 
+        "some hotels are not in the requested city".
+
+    Returns
+    -------
+    data : pandas.DataFrame
+        dataframe of the requests data with hotels features.
+
+    '''
+    
     path = os.path.join(PATH_DATA,'all_data')
     features_hotels = pd.read_csv(os.path.join(path,'features_hotels.csv'))
     
@@ -52,6 +87,24 @@ def add_hotel_features(data) :
     return data
 
 def var_types(data): 
+    '''
+    Define the type of variables in the dataset
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        dataframe of the requests data with hotels features.
+
+    Returns
+    -------
+    var_quant : list of string
+        quantitative variables.
+    var_quali : list of string
+        qualitative variables that will be encoded with dummies.
+    var_quali_to_encode : list of string
+        qualitative variables that will be encoded with target encoding.
+
+    '''
     var_quant = ["date","stock"]
     #var_quali = ["city","language", "mobile","group","brand","parking","pool","children_policy"]
     #var_quali = ["city","language", "mobile",'hotel_id',"group","brand","parking","pool","children_policy"]
@@ -60,6 +113,28 @@ def var_types(data):
     return var_quant,var_quali, var_quali_to_encode
 
 def main_load_data():
+    '''
+    main function : calls the previous functions in the correct order to 
+    perform the complete loading of the data
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    data : pandas.DataFrame
+        dataframe of the requests data with hotels features.
+    Y : np.darray
+        output (price) of the request data
+    var_quant : list of string
+        quantitative variables.
+    var_quali : list of string
+        qualitative variables that will be encoded with dummies.
+    var_quali_to_encode : list of string
+        qualitative variables that will be encoded with target encoding.
+
+    '''
     data, Y = load_data() 
     data = add_hotel_features(data)
     var_quant,var_quali,var_quali_to_encode = var_types(data)

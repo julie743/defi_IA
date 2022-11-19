@@ -29,6 +29,25 @@ from download_prediction import download_pred_Xtest
 # regression tree--------------------------------------------------------------
 # 1. Optimisation
 def Optimize_regTree(X, Y,list_max_depth) :
+    '''
+    Perfom GridSearchCV to find the best max_depth of the tree
+
+    Parameters
+    ----------
+    X : pandas.dataframe
+        training dataset input.
+    Y : pandas.dataframe
+        training dataset output.
+    list_max_depth : list of ints
+        possible values of max_depth.
+        
+    Returns
+    -------
+    best_param : int
+        optimal max_depth.
+
+    '''
+    
     tps0=time.perf_counter()
     param=[{"max_depth":list_max_depth}]
     tree= GridSearchCV(DecisionTreeRegressor(),param,cv=10,n_jobs=-1)
@@ -41,6 +60,24 @@ def Optimize_regTree(X, Y,list_max_depth) :
 
 # 2. Fit le modèle avec les meilleurs paramètres 
 def Model_regTree(X,Y,param_opt):
+    '''
+    Create regression tree with given optimal max_depth and fit it on the 
+    training data
+
+    Parameters
+    ----------
+    X : pandas.dataframe
+        training dataset input.
+    Y : pandas.dataframe
+        training dataset output.
+    param_opt : int
+        optimal max_depth.
+
+    Returns
+    -------
+    treeR : regression tree fitted on the training data
+
+    '''
     tps0=time.perf_counter()
     treeR=DecisionTreeRegressor(max_depth=param_opt) #on optimise ici selon la profondeur
     tps1=time.perf_counter()
@@ -51,6 +88,26 @@ def Model_regTree(X,Y,param_opt):
 
 # prediction échantillon de validation ----------------------------------------
 def Predict_validation_set(X_vali,Y_vali,treeR,model_name):
+    ''''
+    Predict the validation set using an optimal model. Plots and records
+    the results
+
+    Parameters
+    ----------
+    X_vali : pandas.dataframe
+        validation dataset input.
+    Y_vali : pandas.dataframe
+        validation dataset output.
+    treeR : optimal model fit on the training data
+    model_name : string
+        => For plots and recording files.
+        
+    Returns
+    -------
+    scores : dic
+        dictionary of metrics computed on the validation data (MAE, RMSE, R2)
+
+    '''
     prev=treeR.predict(X_vali)
     prev_detransfo = np.exp(prev)
     Y_vali_detransfo = np.exp(Y_vali)
@@ -62,11 +119,44 @@ def Predict_validation_set(X_vali,Y_vali,treeR,model_name):
 
 # prediction échantillon de test ----------------------------------------------
 def Predict_test_set(X_test,treeR):
+    '''
+    Predict the test set and record the results 
+
+    Parameters
+    ----------
+    X_test : pandas.dataframe
+        test dataset input.
+    treeR : optimal model fit on the training data
+
+    Returns
+    -------
+    None.
+
+    '''
     prev_test = treeR.predict(X_test)
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
     download_pred_Xtest(np.array(prev_test).flatten(),'prediction_regression_tree')
     
 def plot_tree(tree_model,X_train,Y_train,model_name):
+    '''
+    Plot theregression tree fitted on the training data
+
+    Parameters
+    ----------
+    tree_model : tree fitted on the training data
+    X_train : pandas.dataframe
+        training dataset input.
+    Y_train : pandas.dataframe
+        training dataset output.
+    model_name : string
+        => For plots and recording files.
+    
+    Returns
+    -------
+    None.
+
+    '''
+    
     plt.figure(figsize=(30,15))
     tree.plot_tree(tree_model,fontsize=20,feature_names=list(X_train.columns), filled=True)
     plt.title("arbre de classification binaire pour la prédiction de la classe de pluie, value="+str(np.unique(list(Y_train))), fontsize=25)
@@ -78,6 +168,22 @@ def plot_tree(tree_model,X_train,Y_train,model_name):
 
 
 def main_regression_tree(list_max_depth) :
+    
+    '''
+    main function : calls the previous functions in the correct order to 
+    perform all the computations for the regrssion tree algorithm
+
+    Parameters
+    ----------
+    list_max_depth : list of int
+        possible values of max_depth for optimization.
+
+    Returns
+    -------
+    None.
+
+    '''
+    
     model_name = 'regression tree'
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
     X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
