@@ -9,15 +9,10 @@ Created on Sat Nov 12 11:36:05 2022
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import copy
-from math import log,sqrt,exp
 import os
 import time
 
 
-from sklearn.metrics import r2_score
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-from itertools import cycle
 from sklearn.model_selection import GridSearchCV
 
 from sklearn.ensemble import GradientBoostingRegressor
@@ -236,14 +231,13 @@ def main_boosting(param_opt=0) :
     Predict_test_set(X_test_renorm,boost_opt)
 
 
-'''
+
 params = {
-    "n_estimators": 500,
-    "max_depth": 10,
+    "n_estimators": 1000,
+    "max_depth": 20,
     "min_samples_split": 5,
     "learning_rate": 0.1,
     "loss": "squared_error",
 }
 
 main_boosting(param_opt=params)
-'''
