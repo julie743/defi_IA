@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov  7 18:58:04 2022
-
-@author: julie
-"""
 import numpy as np
 import pandas as pd
 from math import log,sqrt
