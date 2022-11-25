@@ -282,7 +282,6 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
 
     '''
     
-    
     # split train/validation :
     Y_mod = transform_Y(Y)
     X_train,X_vali,Y_train,Y_vali = split_train_vali(data,Y_mod)
