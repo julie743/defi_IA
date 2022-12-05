@@ -1,16 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov  7 17:44:25 2022
-
-@author: julie
-"""
 import numpy as np
 import pandas as pd
 import os
 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_DATA = os.path.join(PATH_PROJECT,'data')
+#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
+PATH_PROJECT = PATH = 'C:/Users/evaet/Documents/5A/defi_IA/' 
+PATH_DATA = os.path.join(PATH_PROJECT,'data/')
 
 def load_data() : 
     
@@ -26,7 +20,7 @@ def load_data() :
         dataframe of the requests data
 
     '''
-    path = os.path.join(PATH_DATA,'results_requests')
+    path = os.path.join(PATH_DATA,'results_requests/')
     directories = os.listdir(path)
     data = pd.DataFrame()
     for d in directories :
@@ -142,7 +136,8 @@ def main_load_data():
 
 #data,Y,var_quant,var_quali,var_quali_to_encode = main_load_data()
     
-    
+
+
     
     
     

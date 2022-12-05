@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov  7 18:58:04 2022
-
-@author: julie
-"""
 import numpy as np
 import pandas as pd
 from math import log,sqrt
@@ -288,7 +281,6 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
         test utput data (price)
 
     '''
-    
     
     # split train/validation :
     Y_mod = transform_Y(Y)

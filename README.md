@@ -13,3 +13,11 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 Questions : 
 - Target encoder : overfit ? ==> https://maxhalford.github.io/blog/target-encoding/
 - Tester target encoder codé à la main ou par Python 
+- Utiliser Optuna au lieu de GridSearchCV
+
+## To do 
+- Gradio 
+- Dockerfile 
+- Feature engineering 
+- Importance features 
+- Data analysis 

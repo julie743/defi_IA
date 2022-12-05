@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Nov 12 11:36:05 2022
-
-@author: julie
-"""
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -17,10 +9,14 @@ from sklearn.model_selection import GridSearchCV
 
 from sklearn.ensemble import GradientBoostingRegressor
 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
-
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
+
+#Store the weigths 
+directory_weigths = os.path.join(PATH_PROJECT,'weigths')
+file_name = "boosting_weigths_opt"
+
 os.chdir(PATH_UTILITIES)
 
 import data_loading as DL
@@ -106,21 +102,22 @@ def Optimize_boosting(X_train, Y_train) :
 
     '''
     tps0=time.perf_counter()
-    param=[{"learning_rate":[0.01,0.05,0.1,0.2,0.4], "max_depth": np.arange(2,20,4)}]#optimisation de m
-    rf= GridSearchCV(GradientBoostingRegressor(n_estimators=500),param,cv=5,n_jobs=-1)
+    param=[{"learning_rate":[0.01,0.05,0.1,0.2,0.4], "max_depth": np.arange(2,30,2)}] #optimisation de m
+    rf= GridSearchCV(GradientBoostingRegressor(n_estimators=500),param,cv=5,n_jobs=1, verbose = 3) #Permet d'afficher les tests déjà réalisés
+    #rf= GridSearchCV(GradientBoostingRegressor(n_estimators=500),param,cv=5,n_jobs=-1, verbose = 10)
     boostOpt=rf.fit(X_train, Y_train)
     tps1=time.perf_counter()
-    print("Temps execution en mn :",(tps1 - tps0))
+    print("Temps execution en sec :",(tps1 - tps0))
     
     # paramètre optimal
     param_opt = boostOpt.best_params_
-    print("Error la moins élevée = %f, Meilleur paramètre = %s" % (1. -boostOpt.best_score_,boostOpt.best_params_)) #1-R^2
+    print("Erreur la moins élevée = %f, Meilleurs paramètres = %s" % (1. -boostOpt.best_score_,boostOpt.best_params_)) #1-R^2
     
     return param_opt
 
 def Model_boosting(X_train,Y_train,param_opt):
     '''
-    Final model which takes as an imput the optimal parameters computed during
+    Final model which takes as an input the optimal parameters computed during
     the optimization
 
     Parameters
@@ -144,12 +141,14 @@ def Model_boosting(X_train,Y_train,param_opt):
         "max_depth": param_opt["max_depth"],
         "min_samples_split": 5,
         "learning_rate":  param_opt["learning_rate"],
-        "loss": "squared_error",
+        #"loss": "squared_error",
+        "loss": "ls",
     }
     
     tps0=time.perf_counter()
     boosting_opt = GradientBoostingRegressor(**all_param)
     boosting_opt.fit(X_train, Y_train)
+    #boosting_opt.save(os.path.join(directory_weigths,file_name)) #### a modifier 
     tps1=time.perf_counter()
     print("Temps execution en sec :",(tps1 - tps0))
     return boosting_opt
@@ -230,8 +229,6 @@ def main_boosting(param_opt=0) :
     Predict_validation_set(X_vali_renorm,Y_vali,boost_opt,model_name)
     Predict_test_set(X_test_renorm,boost_opt)
 
-
-
 params = {
     "n_estimators": 1000,
     "max_depth": 20,
@@ -240,4 +237,25 @@ params = {
     "loss": "squared_error",
 }
 
-main_boosting(param_opt=params)
+#Avec param optimaux 
+#main_boosting(param_opt=params)
+
+#Sans param optimaux
+#main_boosting()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
