@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = PATH = 'C:/Users/evaet/Documents/5A/defi_IA/' 
+PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
 PATH_DATA = os.path.join(PATH_PROJECT,'data/')
 
 def load_data() : 
