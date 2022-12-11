@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Dec 11 13:57:44 2022
-
-@author: julie
-"""
-
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
 import numpy as np

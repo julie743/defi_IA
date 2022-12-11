@@ -129,8 +129,6 @@ def renorm_var_quant(X,var_quant,var_dum,scaler=0) :
     scaler : scaler fitted on the training data
 
     '''
-    
-    
     # Renormalization of quantitative variables : 
     if scaler == 0:
         scaler = StandardScaler()  
@@ -285,17 +283,17 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     # split train/validation :
     Y_mod = transform_Y(Y)
     X_train,X_vali,Y_train,Y_vali = split_train_vali(data,Y_mod)
-    
+   
     # define order request : 
     X_train,var_quant_new = define_order_requests(X_train,var_quant)
     X_vali,_ = define_order_requests(X_vali,var_quant)
-    
+
     # Prepare input and output data : 
     X_train_mod_type,var_quant_last,var_dum,encoder_list =  prepare_input_data(X_train,var_quant_new,var_quali,var_quali_to_encode, encoder_list = {}, Y=Y_train)
     X_vali_mod_type,_,_,_ =  prepare_input_data(X_vali,var_quant_new,var_quali,var_quali_to_encode, encoder_list = encoder_list,Y = Y_vali)
-    
+
     # renormalize
-    X_train_renorm, scalerX = renorm_var_quant(X_train_mod_type,var_quant_last,var_dum)
+    X_train_renorm, scalerX = renorm_var_quant(X_train_mod_type,var_quant_last,var_dum) ##PB    
     X_vali_renorm, _ = renorm_var_quant(X_vali_mod_type,var_quant_last,var_dum,scalerX)
       
     X_train_renorm.drop('avatar_id',axis=1,inplace=True)
