@@ -78,6 +78,7 @@ def Optimize_regLasso(X_train,Y_train,list_param):
     print("Temps execution en sec pour l'optimisation ':",(tps1 - tps0))
     return alpha_opt
 
+
 # prediction échantillon de validation 
 def Predict_validation_set(X_vali,Y_vali,model_opt,model_name):
     ''''
