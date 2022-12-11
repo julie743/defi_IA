@@ -100,10 +100,11 @@ def var_types(data):
 
     '''
     var_quant = ["date","stock"]
-    #var_quali = ["city","language", "mobile","group","brand","parking","pool","children_policy"]
+    var_quali = ["city","language", "mobile","group","brand","parking","pool","children_policy"]
     #var_quali = ["city","language", "mobile",'hotel_id',"group","brand","parking","pool","children_policy"]
-    var_quali = ["mobile","parking","pool","children_policy"]
-    var_quali_to_encode = ["city","hotel_id","language","group","brand"]
+    #var_quali = ["mobile","parking","pool","children_policy"]
+    #var_quali_to_encode = ["city","hotel_id","language","group","brand"]
+    var_quali_to_encode = ["hotel_id"]
     return var_quant,var_quali, var_quali_to_encode
 
 def main_load_data():

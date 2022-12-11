@@ -79,7 +79,7 @@ def Model_regTree(X,Y,param_opt):
 
 
 # prediction échantillon de validation ----------------------------------------
-def Predict_validation_set(X_vali,Y_vali,treeR,model_name):
+def Predict_validation_set(X_vali,X_vali_mod,Y_vali,treeR,var_quant,var_quali,model_name):
     ''''
     Predict the validation set using an optimal model. Plots and records
     the results
@@ -100,13 +100,17 @@ def Predict_validation_set(X_vali,Y_vali,treeR,model_name):
         dictionary of metrics computed on the validation data (MAE, RMSE, R2)
 
     '''
-    prev=treeR.predict(X_vali)
+    prev=treeR.predict(X_vali_mod)
     prev_detransfo = np.exp(prev)
     Y_vali_detransfo = np.exp(Y_vali)
     scores = PA.compute_scores(Y_vali_detransfo,prev_detransfo)
     PA.plot_pred_obs(Y_vali_detransfo,prev_detransfo,model_name)
     PA.scatterplot_residuals(Y_vali_detransfo,prev_detransfo,model_name)
     PA.histogram_residuals(Y_vali_detransfo,prev_detransfo,model_name)
+    outliers_inf, outliers_sup = PA.outliers_prediction(Y_vali_detransfo,prev_detransfo)
+    PA.histogram_outliers(Y_vali_detransfo,prev_detransfo,outliers_inf, outliers_sup, model_name) 
+    PA.analysis_var_quali_outliers(X_vali,outliers_inf,outliers_sup,var_quali, model_name)
+    PA.analysis_var_quanti_outliers(X_vali,Y_vali_detransfo,prev_detransfo,outliers_inf,outliers_sup,var_quant, model_name)
     return scores
 
 # prediction échantillon de test ----------------------------------------------
@@ -178,10 +182,10 @@ def main_regression_tree(list_max_depth) :
     
     model_name = 'regression tree'
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     param_opt = Optimize_regTree(X_train_renorm, Y_train,list_max_depth)
     treeR = Model_regTree(X_train_renorm, Y_train, param_opt)
-    Predict_validation_set(X_vali_renorm,Y_vali,treeR,model_name)
+    Predict_validation_set(X_vali,X_vali_renorm,Y_vali,treeR,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,treeR)
     #plot_tree(treeR,X_train_renorm,Y_train,model_name)
     

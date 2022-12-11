@@ -109,7 +109,7 @@ def histogram_residuals(Y_true,Y_pred, model_name):
    Y_true : np.darray
        real ouput data (price) of the validation set.
    Y_pred : np.darray
-       predicted ouput data (price) of the validation set..
+       predicted ouput data (price) of the validation set.
    model_name : string
        => For plots and recording files.
 
@@ -130,6 +130,172 @@ def histogram_residuals(Y_true,Y_pred, model_name):
     mkdir(sub_directory)
     plt.savefig(os.path.join(sub_directory,file_name))
     plt.show()
+    
+    
+def outliers_prediction(Y_true,Y_pred) :
+    '''
+    get the indices of the residual outliers in order to analyze later the data
+    that we have for these points that we did not manage to predict well.
+
+    Parameters
+    ----------
+    Y_true : np.darray
+        real ouput data (price) of the validation set.
+    Y_pred : np.darray
+        predicted ouput data (price) of the validation set.
+
+    Returns
+    -------
+    outliers_inf : np.darray
+        indices of negative outliers in the prediction.
+    outliers_sup : np.darray
+        indices of positive outliers in the prediction.
+
+    '''
+    res = Y_true-Y_pred
+    q025 = np.quantile(res,0.25)
+    q075 = np.quantile(res,0.75)
+    lower_bound = q025 - 1.5*(q075-q025)
+    upper_bound = q075 + 1.5*(q075-q025)
+    outliers_inf = np.where(res<lower_bound)[0]
+    outliers_sup = np.where(res>upper_bound)[0]
+    return outliers_inf, outliers_sup
+
+def histogram_outliers(Y_true,Y_pred,outliers_inf, outliers_sup, model_name) :
+    '''
+    plot the histogram of negative and positive outliers to see their repartition
+    
+
+    Parameters
+    ----------
+    Y_true : np.darray
+        real ouput data (price) of the validation set.
+    Y_pred : np.darray
+        predicted ouput data (price) of the validation set.
+    outliers_inf : np.darray
+        indices of negative outliers in the prediction.
+    outliers_sup : np.darray
+        indices of positive outliers in the prediction.
+    model_name : string
+        => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
+    plt.figure(figsize=(10,5))
+    plt.hist(Y_true[outliers_inf]-Y_pred[outliers_inf],bins=20)
+    plt.title('Histogram of negative outlier residuals ' + model_name)
+    plt.xlabel('residuals values')
+    plt.ylabel('number of predictions')
+    file_name = 'histogram_residuals_outliersInf_'+model_name.replace(' ', '_')+'.png'
+    sub_directory = os.path.join(PATH_IMAGE,model_name.replace(' ', '_'))
+    mkdir(sub_directory)
+    plt.savefig(os.path.join(sub_directory,file_name))
+    plt.show()
+    
+    plt.figure(figsize=(10,5))
+    plt.hist(Y_true[outliers_sup]-Y_pred[outliers_sup],bins=20)
+    plt.title('Histogram of positive outlier residuals ' + model_name)
+    plt.xlabel('residuals values')
+    plt.ylabel('number of predictions')
+    file_name = 'histogram_residuals_outliersSup_'+model_name.replace(' ', '_')+'.png'
+    sub_directory = os.path.join(PATH_IMAGE,model_name.replace(' ', '_'))
+    mkdir(sub_directory)
+    plt.savefig(os.path.join(sub_directory,file_name))
+    plt.show()
+
+def analysis_var_quali_outliers(data,outliers_inf,outliers_sup,var_quali, model_name):
+    '''
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        dataframe of validation dataset (X_vali).
+    outliers_inf : np.darray
+        indices of negative outliers in the prediction.
+    outliers_sup : np.darray
+        indices of positive outliers in the prediction.
+    var_quant : list of string
+        qualitative variables 
+    model_name : string
+        => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
+    fig = plt.figure(figsize=(15, 10))
+    i = 1
+    for var in var_quali : 
+        plt.subplot(2, 4, i)
+        data.loc[outliers_inf,var].value_counts().plot.pie(subplots=True, title="pie chart of negative outliers (prediction)", autopct='%1.1f%%')
+        i+=1
+    file_name = 'piechart_residuals_outliersInf_'+model_name.replace(' ', '_')+'.png'
+    sub_directory = os.path.join(PATH_IMAGE,model_name.replace(' ', '_'))
+    mkdir(sub_directory)
+    plt.savefig(os.path.join(sub_directory,file_name))
+    plt.show()
+        
+    fig = plt.figure(figsize=(15, 10))
+    i = 1
+    for var in var_quali : 
+        plt.subplot(2, 4, i)
+        data.loc[outliers_sup,var].value_counts().plot.pie(subplots=True, title="pie chart of positive outliers (prediction)", autopct='%1.1f%%')
+        i+=1
+    file_name = 'piechart_residuals_outliersSup_'+model_name.replace(' ', '_')+'.png'
+    sub_directory = os.path.join(PATH_IMAGE,model_name.replace(' ', '_'))
+    mkdir(sub_directory)
+    plt.savefig(os.path.join(sub_directory,file_name))
+    plt.show()
+    
+def analysis_var_quanti_outliers(data,Y_true,Y_pred,outliers_inf,outliers_sup,var_quant, model_name):
+    '''
+    
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        dataframe of validation dataset (X_vali).
+    Y_true : np.darray
+        real ouput data (price) of the validation set.
+    Y_pred : np.darray
+        predicted ouput data (price) of the validation set.
+    outliers_inf : np.darray
+        indices of negative outliers in the prediction.
+    outliers_sup : np.darray
+        indices of positive outliers in the prediction.
+    var_quant : list of string
+        quantitative variables 
+    model_name : string
+       => For plots and recording files.
+
+    Returns
+    -------
+    None.
+
+    '''
+    res_inf = Y_true[outliers_inf]-Y_pred[outliers_inf]
+    ref_sup =  Y_true[outliers_sup]-Y_pred[outliers_sup]
+    plt.figure(figsize=(15, 10))
+    i = 1
+    for var in var_quant : 
+        plt.subplot(2, 3, i)
+        plt.plot(data.loc[outliers_inf,var], res_inf, "o", markersize = 0.5, color = 'firebrick', label = 'negative outliers')
+        plt.plot(data.loc[outliers_sup,var], ref_sup, "o", markersize = 0.5, color = 'royalblue', label = 'positive outliers')
+        plt.xlabel(var)
+        plt.ylabel('prediction residuals')
+        plt.legend()
+        i += 1
+    plt.suptitle('Analysis of quantitative variables values of outlier residuals ' + model_name)
+    file_name = 'scatterplot_var_quanti_residual_outliers_'+model_name.replace(' ', '_')+'.png'
+    sub_directory = os.path.join(PATH_IMAGE,model_name.replace(' ', '_'))
+    mkdir(sub_directory)
+    plt.savefig(os.path.join(sub_directory,file_name))
+    plt.show()
+    
     
 def compute_scores(Y_true,Y_pred):
     '''
@@ -157,6 +323,8 @@ def compute_scores(Y_true,Y_pred):
     print("R2 = ", dic['r2'])
     print("MAE = ", dic['mae'])
     return dic
+
+
 
 
 

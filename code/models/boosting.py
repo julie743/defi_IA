@@ -238,7 +238,7 @@ params = {
 }
 
 #Avec param optimaux 
-#main_boosting(param_opt=params)
+main_boosting(param_opt=params)
 
 #Sans param optimaux
 #main_boosting()
