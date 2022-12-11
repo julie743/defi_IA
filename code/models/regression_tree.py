@@ -132,7 +132,7 @@ def main_regression_tree(list_max_depth) :
     param_opt = Optimize_regTree(X_train_renorm, Y_train,list_max_depth)
     treeR = Model_regTree(X_train_renorm, Y_train, param_opt)
     Predict_validation_set(X_vali,X_vali_renorm,Y_vali,treeR,var_quant,var_quali,model_name)
-    Predict_test_set(X_test_renorm,treeR)
+    Predict_test_set(X_test_renorm,treeR,model_name)
     #plot_tree(treeR,X_train_renorm,Y_train,model_name)
     
 
