@@ -47,7 +47,7 @@ def Predict_validation_set(X_vali,X_vali_mod,Y_vali,model,var_quant,var_quali,mo
     return scores
 
 # prediction échantillon de test ----------------------------------------------
-def Predict_test_set(X_test,model):
+def Predict_test_set(X_test,model,model_name):
     '''
     Predict the test set and record the results 
 
@@ -64,4 +64,4 @@ def Predict_test_set(X_test,model):
     '''
     prev_test = model.predict(X_test)
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
-    download_pred_Xtest(np.array(prev_test).flatten(),'prediction_regression_tree')
+    download_pred_Xtest(np.array(prev_test).flatten(),'prediction'+model_name.replace(' ', '_')+'.png')
