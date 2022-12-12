@@ -3,10 +3,12 @@ Lien vers le Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb
 RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES : 
 -------------------------------------------------------
 
-1. Sur 3000 observations (3 semaines de requetes) : 
+1. Résultats : 
 - Regression linéaire : 35.44 
 - Regression Lasso : 35.86
-- Arbre de regression : 30.78
+- Arbre de regression : 27.92
+    - Paramètre : max_depth = 36
+    - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - Foret aléatoire : 28.21
 - Foret aléatoire optimisée : 28.20
 
