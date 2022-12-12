@@ -285,18 +285,12 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     # split train/validation :
     Y_mod = transform_Y(Y)
     X_train,X_vali,Y_train,Y_vali = split_train_vali(data,Y_mod)
-<<<<<<< HEAD
     
     # add cost of living : 
-    '''
     X_train = add_cost_living(X_train)
     X_vali = add_cost_living(X_vali)
     var_quant.append("cost_life")
-    '''
-    
-=======
-   
->>>>>>> 9f016d22412b35bb2476c7b2db571281538f8c23
+
     # define order request : 
     X_train,var_quant_new = define_order_requests(X_train,var_quant)
     X_vali,_ = define_order_requests(X_vali,var_quant)
@@ -314,7 +308,7 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     
     # charge test set 
     data_test = pd.read_csv(os.path.join(PATH_DATA,'all_data','test_set_complet.csv'))
-    #data_test = add_cost_living(data_test)
+    data_test = add_cost_living(data_test)
     var_quant.append('order_requests')
     X_test,_,_,_ = prepare_input_data(data_test,var_quant_new,var_quali,var_quali_to_encode, encoder_list = encoder_list, Y =0)
     

@@ -282,7 +282,7 @@ def analysis_var_quanti_outliers(data,Y_true,Y_pred,outliers_inf,outliers_sup,va
     plt.figure(figsize=(15, 10))
     i = 1
     for var in var_quant : 
-        plt.subplot(2, 3, i)
+        plt.subplot(1, len(var_quant), i)
         plt.plot(data.loc[outliers_inf,var], res_inf, "o", markersize = 0.5, color = 'firebrick', label = 'negative outliers')
         plt.plot(data.loc[outliers_sup,var], ref_sup, "o", markersize = 0.5, color = 'royalblue', label = 'positive outliers')
         plt.xlabel(var)

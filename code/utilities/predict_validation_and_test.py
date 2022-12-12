@@ -56,4 +56,4 @@ def Predict_test_set(X_test,model,model_name):
     '''
     prev_test = model.predict(X_test)
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
-    download_pred_Xtest(np.array(prev_test).flatten(),'prediction_'+model_name.replace(' ', '_')+'.png')
+    download_pred_Xtest(np.array(prev_test).flatten(),'prediction_'+model_name.replace(' ', '_'))
