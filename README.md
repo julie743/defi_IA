@@ -4,7 +4,7 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 -------------------------------------------------------
 
 1. Résultats : 
-- Regression linéaire : 35.44 
+- Regression linéaire : 31.64 
 - Regression Lasso : 35.86
 - Arbre de regression : 27.92
     - Paramètre : max_depth = 36
