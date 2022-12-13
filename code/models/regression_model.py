@@ -18,6 +18,7 @@ import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
+from predict_validation_and_test import Predict_validation_set, Predict_test_set
 
 # modele regression linéaire
 def Model_reg(X_train,Y_train,alpha=0):
@@ -79,60 +80,6 @@ def Optimize_regLasso(X_train,Y_train,list_param):
     return alpha_opt
 
 
-# prediction échantillon de validation 
-def Predict_validation_set(X_vali,Y_vali,model_opt,model_name):
-    ''''
-    Predict the validation set using an optimal model. Plots and records
-    the results
-
-    Parameters
-    ----------
-    X_vali : pandas.dataframe
-        validation dataset input.
-    Y_vali : pandas.dataframe
-        validation dataset output.
-    model_opt : optimal model fit on the training data
-    model_name : string
-        => For plots and recording files.
-        
-    Returns
-    -------
-    scores : dic
-        dictionary of metrics computed on the validation data (MAE, RMSE, R2)
-
-    '''
-    
-    prev=model_opt.predict(X_vali)
-    prev_detransfo = np.exp(prev)
-    Y_vali_detransfo = np.exp(Y_vali)
-    scores = PA.compute_scores(Y_vali_detransfo,prev_detransfo)
-    PA.plot_pred_obs(Y_vali_detransfo,prev_detransfo,model_name)
-    PA.scatterplot_residuals(Y_vali_detransfo,prev_detransfo,model_name)
-    PA.histogram_residuals(Y_vali_detransfo,prev_detransfo,model_name)
-    return scores
-
-# prediction échantillon de test
-def Predict_test_set(X_test,model_opt,model_name):
-    '''
-    Predict the test set and record the results 
-
-    Parameters
-    ----------
-    X_test : pandas.dataframe
-        test dataset input.
-    model_opt : optimal model fit on the training data
-    model_name : string
-        => For plots and recording files.
-
-    Returns
-    -------
-    None.
-
-    '''
-    prev_test = model_opt.predict(X_test)
-    prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
-    download_pred_Xtest(np.array(prev_test).flatten(),model_name)
-
 def plot_lasso_coeff(regLasso,X_train_renorm,model_name):
     '''
     Plot Lasso coefficient by order of importance
@@ -180,12 +127,12 @@ def main_Linear():
     '''
     
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'linear regression'
     
     regLin = Model_reg(X_train_renorm,Y_train)
-    scores = Predict_validation_set(X_vali_renorm,Y_vali,regLin,model_name)
-    Predict_test_set(X_test_renorm,regLin)
+    scores = Predict_validation_set(X_vali,X_vali_renorm,Y_vali,regLin,var_quant,var_quali,model_name)
+    Predict_test_set(X_test_renorm,regLin,model_name)
     
 def main_Lasso():
     '''
@@ -203,15 +150,15 @@ def main_Lasso():
     '''
     
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'Lasso regression model'
     
-    alpha_opt = Optimize_regLasso(X_train_renorm,Y_train,[0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2])
+    alpha_opt = Optimize_regLasso(X_train_renorm,Y_train,[0.01,0.02,0.04,0.06,0.08,0.1,0.2])
     regLasso = Model_reg(X_train_renorm,Y_train,alpha_opt)
     
     plot_lasso_coeff(regLasso,X_train_renorm,model_name) # plot coeff 
     
-    scores = Predict_validation_set(X_vali_renorm,Y_vali,regLasso,model_name)
+    scores = Predict_validation_set(X_vali,X_vali_renorm,Y_vali,regLasso,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,regLasso,model_name)
     
-#main_Lasso()    
+main_Lasso()    

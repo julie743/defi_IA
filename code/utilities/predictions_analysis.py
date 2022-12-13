@@ -279,7 +279,7 @@ def analysis_var_quanti_outliers(data,Y_true,Y_pred,outliers_inf,outliers_sup,va
     '''
     res_inf = Y_true[outliers_inf]-Y_pred[outliers_inf]
     ref_sup =  Y_true[outliers_sup]-Y_pred[outliers_sup]
-    plt.figure(figsize=(15, 10))
+    plt.figure(figsize=(15, 7))
     i = 1
     for var in var_quant : 
         plt.subplot(1, len(var_quant), i)
