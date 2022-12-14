@@ -29,6 +29,7 @@ import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
+from predict_validation_and_test import Predict_validation_set, Predict_test_set
 
 
 
@@ -100,55 +101,6 @@ def Model_NN(X_train,Y_train,param_opt):
     
     return nnetOpt
 
-def Predict_validation_set(X_vali,Y_vali,nnetOpt,model_name='neural network'):
-    '''
-    Predict the validation set using an optimal model. Plots and records
-    the results
-
-    Parameters
-    ----------
-    X_vali : pandas.dataframe
-        validation dataset input.
-    Y_vali : pandas.dataframe
-        validation dataset output.
-    nnetOpt : optimal model fit on the training data
-    model_name : string
-        Default = "neural network" => For plots and recording files. 
-
-    Returns
-    -------
-    scores : dic
-        dictionary of metrics computed on the validation data (MAE, RMSE, R2)
-
-    '''
-    
-    prev=nnetOpt.predict(X_vali)
-    prev_detransfo = np.exp(prev)
-    Y_vali_detransfo = np.exp(Y_vali)
-    scores = PA.compute_scores(Y_vali_detransfo,prev_detransfo)
-    PA.plot_pred_obs(Y_vali_detransfo,prev_detransfo,model_name)
-    PA.scatterplot_residuals(Y_vali_detransfo,prev_detransfo,model_name)
-    PA.histogram_residuals(Y_vali_detransfo,prev_detransfo,model_name)
-    return scores
-
-def Predict_test_set(X_test,nnetOpt):
-    '''
-    Predict the test set and record the results 
-
-    Parameters
-    ----------
-    X_test : pandas.dataframe
-        test dataset input.
-    nnetOpt : optimal model fit on the training data
-
-    Returns
-    -------
-    None.
-
-    '''
-    prev_test = nnetOpt.predict(X_test)
-    prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
-    download_pred_Xtest(np.array(prev_test).flatten(),'prediction_neural_network')
 
 
 def main_NN(param_opt=0) :
@@ -168,13 +120,13 @@ def main_NN(param_opt=0) :
     '''
     
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'neural network'
     if param_opt == 0 :
         param_opt = Optimize_NN(X_train_renorm, Y_train)
-    boost_opt = Model_NN(X_train_renorm, Y_train, param_opt)
-    Predict_validation_set(X_vali_renorm,Y_vali,boost_opt,model_name)
-    Predict_test_set(X_test_renorm,boost_opt)
+    nn_opt = Model_NN(X_train_renorm, Y_train, param_opt)
+    Predict_validation_set(X_vali,X_vali_renorm,Y_vali,nn_opt,var_quant,var_quali,model_name)
+    Predict_test_set(X_test_renorm,nn_opt,model_name)
 
 params = {
     "alpha": 2,

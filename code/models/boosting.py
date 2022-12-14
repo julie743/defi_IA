@@ -184,12 +184,12 @@ params = {
     "n_estimators": 1000,
     "max_depth": 20,
     "min_samples_split": 5,
-    "learning_rate": 0.1,
+    "learning_rate": 0.01,
     "loss": "squared_error",
 }
 
 #Avec param optimaux 
-#main_boosting(param_opt=params)
+main_boosting(param_opt=params)
 
 #Sans param optimaux
 #main_boosting()
