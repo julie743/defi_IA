@@ -133,7 +133,7 @@ params = {
     "hidden_layer_sizes": (20,),
 }
 
-main_NN(param_opt=0)
+#main_NN(param_opt=0)
 
 
 
