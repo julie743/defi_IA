@@ -4,9 +4,11 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 -------------------------------------------------------
 
 1. Résultats : 
-- Regression linéaire : 31.64 
-- Regression Lasso : 35.86
-- Arbre de regression : 27.92
+- Regression linéaire : RMSE = 31.64 
+- Regression Lasso : RMSE = 67.2
+    - Paramètre : alpha = 0.01
+    - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
+- Arbre de regression : RMSE = 27.92
     - Paramètre : max_depth = 36
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - Boosting : 26.86
@@ -16,8 +18,8 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
                    "learning_rate": 0.01,
                    "loss": "squared_error"
      - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-- Foret aléatoire : 28.21
-- Foret aléatoire optimisée : 28.20
+- Foret aléatoire : RMSE = 28.21
+- Foret aléatoire optimisée : RMSE = 28.20
 
 Questions : 
 - Target encoder : overfit ? ==> https://maxhalford.github.io/blog/target-encoding/
@@ -27,6 +29,6 @@ Questions :
 ## To do 
 - Gradio 
 - Dockerfile 
-- Feature engineering 
+- Feature engineering : ajout de la variable cost_life 
 - Importance features 
 - Data analysis 
