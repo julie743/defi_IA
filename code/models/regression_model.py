@@ -161,4 +161,4 @@ def main_Lasso():
     scores = Predict_validation_set(X_vali,X_vali_renorm,Y_vali,regLasso,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,regLasso,model_name)
     
-main_Lasso()    
+#main_Lasso()    
