@@ -11,15 +11,19 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 - Arbre de regression : RMSE = 27.92
     - Paramètre : max_depth = 36
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-- Boosting : 26.86
+- Boosting : RMSE = 26.86
     - Paramètres : "n_estimators": 1000,
                    "max_depth": 20,
                    "min_samples_split": 5,
                    "learning_rate": 0.01,
                    "loss": "squared_error"
      - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-- Foret aléatoire : RMSE = 28.21
-- Foret aléatoire optimisée : RMSE = 28.20
+- Neural Network : RMSE = 30.21
+    - Paramètres : 'alpha': 0.5, 'hidden_layer_sizes': (28,)
+    - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
+- Foret aléatoire : RMSE = 28.21 (pas à jour je crois ?)
+- Foret aléatoire optimisée : RMSE = 28.20 (pas à jour je crois ?)
+
 
 Questions : 
 - Target encoder : overfit ? ==> https://maxhalford.github.io/blog/target-encoding/
