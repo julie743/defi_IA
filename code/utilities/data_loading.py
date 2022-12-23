@@ -4,9 +4,10 @@ import os
 
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
 PATH_DATA = os.path.join(PATH_PROJECT,'data/')
 
+#Basic requests  
 def load_data() : 
     
     '''
@@ -29,6 +30,25 @@ def load_data() :
         for f in files :
             path_file = os.path.join(path,d,f)
             data = pd.concat([data,pd.read_csv(path_file)],ignore_index=True)
+    Y = data['price'].to_numpy()
+    data.drop('price',axis=1,inplace=True)
+    return data, Y
+
+#Adversarial validation requests  
+def load_data2() : 
+    
+    '''
+    Same as load_data except that we load the requests retained by the adversarial validation 
+    '''
+
+    path = os.path.join(PATH_DATA,'adversarial_validation_data/')
+    f = os.listdir(path)[1]
+    file = os.path.join(path,f)
+    data = pd.DataFrame(pd.read_csv(file))
+    #tmp = pd.DataFrame(dict({'avatar_id':np.ones((len(data)))}))
+    #data = pd.concat([data,tmp],axis=1)
+    #data['avatar_id'] = np.zeros((len(data)))
+    data.drop(['is_test'],axis=1,inplace=True)   
     Y = data['price'].to_numpy()
     data.drop('price',axis=1,inplace=True)
     return data, Y
@@ -136,10 +156,18 @@ def main_load_data():
     var_quant,var_quali,var_quali_to_encode = var_types(data)
     return data,Y,var_quant,var_quali,var_quali_to_encode
 
+def main_load_data2():
+    '''
+    Same as main_load_data except that we use the load_data2 method ie. the Adversarial validation requests
+    '''
+    data, Y = load_data2() 
+    var_quant,var_quali,var_quali_to_encode = var_types(data)
+    return data,Y,var_quant,var_quali,var_quali_to_encode
+
 #data,Y,var_quant,var_quali,var_quali_to_encode = main_load_data()
-    
+#data2,Y2,var_quant2,var_quali2,var_quali_to_encode2 = main_load_data2()
 
 
-    
-    
-    
+
+
+

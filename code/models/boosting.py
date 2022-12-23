@@ -3,19 +3,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import time
-
-
 from sklearn.model_selection import GridSearchCV
-
 from sklearn.ensemble import GradientBoostingRegressor
 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
+#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
+PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/'
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
-#Store the weigths 
-directory_weigths = os.path.join(PATH_PROJECT,'weigths')
-file_name = "boosting_weigths_opt"
 
 os.chdir(PATH_UTILITIES)
 
@@ -171,9 +167,10 @@ def main_boosting(param_opt=0) :
 
     '''
     
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
-    model_name = 'boosting'
+    model_name = 'boosting_adversarial'
     if param_opt == 0 :
         param_opt = Optimize_boosting(X_train_renorm, Y_train)
     boost_opt = Model_boosting(X_train_renorm, Y_train, param_opt)

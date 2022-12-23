@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Dec 11 12:46:14 2022
-
-@author: julie
-"""
 import pandas as pd
 
 def add_cost_living(data) :

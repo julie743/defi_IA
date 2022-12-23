@@ -281,7 +281,7 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
         test utput data (price)
 
     '''
-    
+
     # split train/validation :
     Y_mod = transform_Y(Y)
     X_train,X_vali,Y_train,Y_vali = split_train_vali(data,Y_mod)
@@ -294,24 +294,24 @@ def main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     # define order request : 
     X_train,var_quant_new = define_order_requests(X_train,var_quant)
     X_vali,_ = define_order_requests(X_vali,var_quant)
-
+    
     # Prepare input and output data : 
     X_train_mod_type,var_quant_last,var_dum,encoder_list =  prepare_input_data(X_train,var_quant_new,var_quali,var_quali_to_encode, encoder_list = {}, Y=Y_train)
     X_vali_mod_type,_,_,_ =  prepare_input_data(X_vali,var_quant_new,var_quali,var_quali_to_encode, encoder_list = encoder_list,Y = Y_vali)
-
+   
     # renormalize
     X_train_renorm, scalerX = renorm_var_quant(X_train_mod_type,var_quant_last,var_dum) ##PB    
     X_vali_renorm, _ = renorm_var_quant(X_vali_mod_type,var_quant_last,var_dum,scalerX)
-      
+  
     X_train_renorm.drop('avatar_id',axis=1,inplace=True)
     X_vali_renorm.drop('avatar_id',axis=1,inplace=True)
-    
+
     # charge test set 
     data_test = pd.read_csv(os.path.join(PATH_DATA,'all_data','test_set_complet.csv'))
     data_test = add_cost_living(data_test)
     var_quant.append('order_requests')
     X_test,_,_,_ = prepare_input_data(data_test,var_quant_new,var_quali,var_quali_to_encode, encoder_list = encoder_list, Y =0)
-    
+
     X_test_renorm, _ = renorm_var_quant(X_test,var_quant_last,var_dum)
     X_test_renorm.drop('avatar_id',axis=1,inplace=True)
     

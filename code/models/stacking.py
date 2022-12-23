@@ -33,7 +33,7 @@ import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
 
 # Data loading  
-data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
 X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm =  DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
 X_train_renorm = X_train_renorm.values
 X_test_renorm = X_test_renorm.values

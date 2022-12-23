@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import time
 from sklearn.model_selection import GridSearchCV
+import pickle 
 
 import lightgbm as lgbm
 
@@ -14,8 +15,8 @@ PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
 #Store the weigths 
-"""directory_weigths = os.path.join(PATH_PROJECT,'weigths')
-file_name = "rf_weigths_opt"""
+directory_weigths = os.path.join(PATH_PROJECT,'weigths')
+filename = 'finalized_model.sav'
 
 os.chdir(PATH_UTILITIES)
 
@@ -83,6 +84,7 @@ def Model_LGBM(X_train,Y_train,param_opt):
     lgbmOpt = lgbm.LGBMRegressor(**all_param)
     lgbmOpt.fit(X_train, Y_train)
     #rf_opt.save(os.path.join(directory_weigths,file_name)) #### a modifier 
+    pickle.dump(lgbmOpt, open(filename, 'wb'))
     tps1=time.perf_counter()
     print("Temps execution en sec :",(tps1 - tps0))
     return lgbmOpt
@@ -102,42 +104,36 @@ def Predict_test_set(X_test,lgbmOpt):
     prev_test = pd.DataFrame(np.exp(prev_test),columns=['price'])
     download_pred_Xtest(np.array(prev_test).flatten(),'prediction_lgbm')
 
-
 def main_lgbm(param_opt=0) :
     
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
-    X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
-    model_name = 'lgbm'
+    #X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    #model_name = 'lgbm'
+    model_name = 'lgbm_test' #test to save the weights 
     if param_opt == 0 :
         param_opt = Optimize_LGBM(X_train_renorm, Y_train)
-    lgbmOpt = Model_LGBM(X_train_renorm, Y_train, param_opt)
-    Predict_validation_set(X_vali_renorm,Y_vali,lgbmOpt,model_name)
-    Predict_test_set(X_test_renorm,lgbmOpt)
+    lgbmOpt = Model_LGBM(X_train_renorm, Y_train, param_opt) 
+    #Predict_validation_set(X_vali_renorm,Y_vali,lgbmOpt,model_name) #A DECOMMENTER 
+    #Predict_test_set(X_test_renorm,lgbmOpt) #A DECOMMENTER 
 
-#Sans optimisation 
+#Without optimization 
 """params = {"objective":"regression",
     "num_leaves":32,
     "max_depth":10,
     "learning_rate":0.05, 
     "metric":'ls',
-    "n_estimators":1500}
-main_lgbm(param_opt=params)"""
+    "n_estimators":1500}"""
+
+params = {"objective":"regression",
+    "num_leaves":10,
+    "max_depth":2,
+    "learning_rate":0.1, 
+    "metric":'ls',
+    "n_estimators":10}
+main_lgbm(param_opt=params)
 
 #Avec optimisation 
-main_lgbm()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#main_lgbm()
 
 
