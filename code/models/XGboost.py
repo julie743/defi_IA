@@ -57,8 +57,8 @@ def xgboost_reg(X_train,Y_train,X_vali,Y_vali,params) :
     
 def Optimize_xgb(X_train, Y_train) :
     tps0=time.perf_counter()
-    param=[{"n_estimators":[500,700, 900, 1100], "max_depth": np.arange(5,25,5), "learning_rate":[0.01,0.05,0.1]}] #optimisation de m
-    xgboost= GridSearchCV(xgb.XGBRegressor(n_estimators=500),param,cv=5,n_jobs=1, verbose = 3) #Permet d'afficher les tests déjà réalisés
+    param=[{"n_estimators":[500,700,900,1100], "max_depth": np.arange(5,25,5), "learning_rate":[0.01,0.05,0.1]}] #optimisation de m
+    xgboost= GridSearchCV(xgb.XGBRegressor(),param,cv=5,n_jobs=1, verbose = 3) #Permet d'afficher les tests déjà réalisés
     xgbOpt=xgboost.fit(X_train, Y_train)
     tps1=time.perf_counter()
     print("Temps execution en sec :",(tps1 - tps0))
@@ -67,7 +67,6 @@ def Optimize_xgb(X_train, Y_train) :
     param_opt = xgbOpt.best_params_
     print("Erreur la moins élevée = %f, Meilleurs paramètres = %s" % (1. -xgbOpt.best_score_,xgbOpt.best_params_)) #1-R^2
     return param_opt
-
 
 def Model_xgb(X_train,Y_train,param_opt):
     """all_param = {
@@ -105,8 +104,8 @@ def Predict_test_set(X_test,xgb_opt):
 
 
 def main_xgboost(param_opt=0) :
-    
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     model_name = 'xgboost'
     if param_opt == 0 :

@@ -99,8 +99,9 @@ def Optimize_boosting(X_train, Y_train) :
 
     '''
     tps0=time.perf_counter()
-    param=[{"learning_rate":[0.01,0.05,0.1,0.2,0.4], "max_depth": np.arange(2,30,2)}] #optimisation de m
-    rf= GridSearchCV(GradientBoostingRegressor(n_estimators=500),param,cv=5,n_jobs=1, verbose = 3) #Permet d'afficher les tests déjà réalisés
+    #param=[{"learning_rate":[0.01,0.05,0.1,0.2,0.4], "max_depth": np.arange(2,30,2)}] 
+    param=[{"n_estimators": np.arange(2000,6000,1000)}] 
+    rf= GridSearchCV(GradientBoostingRegressor(learning_rate=0.3),param,cv=5,n_jobs=1, verbose = 3) #Permet d'afficher les tests déjà réalisés
     #rf= GridSearchCV(GradientBoostingRegressor(n_estimators=500),param,cv=5,n_jobs=-1, verbose = 10)
     boostOpt=rf.fit(X_train, Y_train)
     tps1=time.perf_counter()
@@ -173,23 +174,23 @@ def main_boosting(param_opt=0) :
     model_name = 'boosting_adversarial'
     if param_opt == 0 :
         param_opt = Optimize_boosting(X_train_renorm, Y_train)
-    boost_opt = Model_boosting(X_train_renorm, Y_train, param_opt)
-    Predict_validation_set(X_vali,X_vali_renorm,Y_vali,boost_opt,var_quant,var_quali,model_name)
-    Predict_test_set(X_test_renorm,boost_opt,model_name)
+    #boost_opt = Model_boosting(X_train_renorm, Y_train, param_opt)
+    #Predict_validation_set(X_vali,X_vali_renorm,Y_vali,boost_opt,var_quant,var_quali,model_name)
+    #Predict_test_set(X_test_renorm,boost_opt,model_name)
 
-params = {
+"""params = {
     "n_estimators": 1000,
     "max_depth": 20,
     "min_samples_split": 5,
     "learning_rate": 0.01,
     "loss": "squared_error",
-}
+}"""
 
 #Avec param optimaux 
-main_boosting(param_opt=params)
+#main_boosting(param_opt=params)
 
 #Sans param optimaux
-#main_boosting()
+main_boosting()
 
 
 
