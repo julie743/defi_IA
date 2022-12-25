@@ -127,6 +127,8 @@ def main_regression_tree(list_max_depth) :
     '''
     
     model_name = 'regression tree'
+    model_name = 'regression tree adversarial'
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
     data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
     param_opt = Optimize_regTree(X_train_renorm, Y_train,list_max_depth)
