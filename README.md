@@ -24,15 +24,8 @@ RECAP DES SCORES OBTENUS AVEC LES MODELES IMPLEMENTES :
 - Foret aléatoire : RMSE = 28.21 (pas à jour je crois ?)
 - Foret aléatoire optimisée : RMSE = 28.20 (pas à jour je crois ?)
 
-
-Questions : 
-- Target encoder : overfit ? ==> https://maxhalford.github.io/blog/target-encoding/
-- Tester target encoder codé à la main ou par Python 
-- Utiliser Optuna au lieu de GridSearchCV
-
 ## To do 
-- Gradio 
+- Gradio (OK) : faire le ReadME
 - Dockerfile 
-- Feature engineering : ajout de la variable cost_life 
-- Importance features 
-- Data analysis 
+- Faire tourner l'interprétabilité 
+- ReadME Projet 
