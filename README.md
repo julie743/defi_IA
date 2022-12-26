@@ -2,7 +2,7 @@ Lien vers l'Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb
 
 Organisation du Github :
 -------------------------------------------------------
-**1. dossier code : tous les codes développés pour le défi IA :**
+**1. Dossier code : tous les codes développés pour le défi IA :**
 - **utilities :** codes utilisés par tous les modèles développés :
     - data_loading.py : charger les données requêtées, ajouter les informations des hotels et définir les types de variables
     - data_preparation_for_models.py : mise en forme des données prêtes à être utilisées par les modèles (encodage, renormalisation, split train/validation...)
@@ -31,8 +31,17 @@ Organisation du Github :
     - adversarial_validation.py : adversarial network pour sélectionner les données les plus similaires à l'échantillon de test
     - Adversarial_validation.ipynb
 
+**2. Dossier data :**
+    - adversarial_validation_data : données sélectionnées par l'adversarial validation network
+    - all_data : toutes les données requêtées concaténées en un dataframe, set de test, features des hotels
+    - results_requests : résultats des requêtes par semaines
+    - stocks_requetes : liste des requêtes effectuées chaque semaine
+    
+**3. Dossier images :** contient les graphes d'analyse des résultats de chaque modèle sur l'échantillon de validation (chaque modèle a son propre sous dossier)
 
+**4. Dossier predictions :** contient les fichiers .csv de la prédiction de chaque modèle sur l'échantillon de test (au format accepté par la plateforme kaggle)    
 
+**5. Dossier weigths :** contient les poids des modèles retenus
 
 
 
