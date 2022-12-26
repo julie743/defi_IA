@@ -119,9 +119,11 @@ def main_NN(param_opt=0) :
 
     '''
     
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
-    model_name = 'neural network'
+    #model_name = 'neural network'
+    model_name = 'neural network adversarial'
     if param_opt == 0 :
         param_opt = Optimize_NN(X_train_renorm, Y_train)
     nn_opt = Model_NN(X_train_renorm, Y_train, param_opt)
