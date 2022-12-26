@@ -12,6 +12,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import time
+import pickle
 
 
 from sklearn.model_selection import GridSearchCV
@@ -119,18 +120,23 @@ def main_NN(param_opt=0) :
 
     '''
     
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
-    model_name = 'neural network'
+    #model_name = 'neural network'
+    model_name = 'neural network adversarial'
     if param_opt == 0 :
         param_opt = Optimize_NN(X_train_renorm, Y_train)
     nn_opt = Model_NN(X_train_renorm, Y_train, param_opt)
+    #download model's weigths
+    path_weigths = os.path.join(PATH_PROJECT,'weigths','neural_network_adversarial.sav')
+    pickle.dump(nn_opt, open(path_weigths, 'wb'))
     Predict_validation_set(X_vali,X_vali_renorm,Y_vali,nn_opt,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,nn_opt,model_name)
 
 params = {
-    "alpha": 2,
-    "hidden_layer_sizes": (20,),
+    "alpha": 0.5,
+    "hidden_layer_sizes": (18,),
 }
 
 #main_NN(param_opt=0)

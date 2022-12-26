@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/'
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/'
+PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)
@@ -126,9 +126,11 @@ def main_Linear():
 
     '''
     
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
-    model_name = 'linear regression'
+    #model_name = 'linear regression'
+    model_name = 'linear regression adversarial'
     
     regLin = Model_reg(X_train_renorm,Y_train)
     scores = Predict_validation_set(X_vali,X_vali_renorm,Y_vali,regLin,var_quant,var_quali,model_name)
@@ -149,9 +151,11 @@ def main_Lasso():
 
     '''
     
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    #data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
-    model_name = 'Lasso regression model'
+    #model_name = 'Lasso regression model'
+    model_name = 'Lasso regression model adversarial'
     
     alpha_opt = Optimize_regLasso(X_train_renorm,Y_train,[0.01,0.02,0.04,0.06,0.08,0.1,0.2])
     regLasso = Model_reg(X_train_renorm,Y_train,alpha_opt)
