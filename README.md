@@ -2,8 +2,8 @@ Lien vers l'Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb
 
 Organisation du Github :
 -------------------------------------------------------
-1. dossier code : tous les codes développés pour le défi IA :
-- utilities : codes utilisés par tous les modèles développés :
+**1. dossier code : tous les codes développés pour le défi IA :**
+- **utilities :** codes utilisés par tous les modèles développés :
     - data_loading.py : charger les données requêtées, ajouter les informations des hotels et définir les types de variables
     - data_preparation_for_models.py : mise en forme des données prêtes à être utilisées par les modèles (encodage, renormalisation, split train/validation...)
     - predict_validation_and_test.py : prédiction de l'échantillon de test et de validation (adapté à tous les modèles développés)
@@ -12,7 +12,26 @@ Organisation du Github :
     - predictions_analysis.py : calculer les scores de prédiction + tracer les graphes pour l'analyse des résultats des modèles
     - remove_duplicates : enlever les doublons dans le jeu d'entrainement 
 
+- **request_data_analysis :** 
+    - data_analysis_request.ypnb : analyse de données des données requêtées 
+
+- **models :** tous les modèles développés. 
+    - modèles développés : linear regression, LASSO, regression tree, random forest, neural network, boosting, catboost, adaboost, XGboost
+    - Pour chaque modèle il y a : 
+        - un fichier .py qui contient les fonctions pour créer et le modèle, trouver les paramètres optimaux 
+        - un fichier .ipynb qui contient la liste des paramètres optimaux trouvés + l'analyse des résultats du modèle sur l'échantillon de validation
+    - stacking.py et naive_stacking : combiner les modèles construits pour obtenir un meilleur modèle
     
+- **gradio :** 
+    - gradio.py 
+    - gradio.ipynb
+
+- **Test_set_analysis :**
+    - Test_set_analysis.ipynb : analyse de données des 17% du jeu de test
+    - adversarial_validation.py : adversarial network pour sélectionner les données les plus similaires à l'échantillon de test
+    - Adversarial_validation.ipynb
+
+
 
 
 
