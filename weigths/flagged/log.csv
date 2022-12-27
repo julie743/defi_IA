@@ -1,0 +1,5 @@
+Select a city,Select a language,Select a device - 0 (computer) & 1 (mobile phone),Select a date,Select the hotel_id,Select the stock,group,brand,Parking available,Swimming pool available,Select the children policy of the hotel,output,flag,username,timestamp
+amsterdam,french,1,15,516,115,Yin Yang,Royal Lotus,0,1,1,,,,2022-12-27 11:23:22.917375
+amsterdam,french,1,15,516,115,Yin Yang,Royal Lotus,0,1,1,,,,2022-12-27 11:23:23.269119
+amsterdam,french,1,15,516,115,Yin Yang,Royal Lotus,0,1,1,,,,2022-12-27 11:23:23.477212
+,,0,0,0,0,,,0,0,0,,,,2022-12-27 11:23:29.645107
