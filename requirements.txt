@@ -1,0 +1,7 @@
+numpy
+gradio
+tensorflow
+pandas
+scikit-learn
+category_encoders
+lightgbm
