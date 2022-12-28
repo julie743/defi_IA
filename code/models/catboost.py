@@ -106,7 +106,49 @@ def main_catboost(param_opt=0) :
 #main_catboost(param_opt=params)
 
 #Sans param optimaux
-main_catboost()
+#main_catboost()
+
+#----------------------------------- OPTUNA -----------------------------------
+import optuna
+from sklearn.metrics import mean_squared_error
+SEED = 42
+n_trials = 1000
+
+#Function that we will use after to plot the best hyper parameters
+def tune(objective) :
+    study = optuna.create_study(direction = "minimize")
+    study.optimize(objective, n_trials=n_trials)
+    print('Number of finished trials:', len(study.trials))
+    print('Best trial:', study.best_trial.params)
+    best_params = study.best_trial.params
+   
+    return best_params
+
+def cat_objective(trial) :
+    #x_train, x_test, y_train, y_test = train_test_split(data[testons], target, test_size=0.2,random_state=42)    
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    _n_estimators = trial.suggest_int("n_estimators", 1000, 2500)
+    _learning_rate = trial.suggest_float("learning_rate", 0.01, 0.3)
+    _max_depth = trial.suggest_int("max_depth", 4, 10)
+   
+    cat = CatBoostRegressor(
+        n_estimators = _n_estimators,  
+        learning_rate = _learning_rate,
+        max_depth = _max_depth,
+    )
+   
+    #early_stopping_rounds avoids overfitting
+    cat.fit(X_train_renorm,Y_train)
+    preds = cat.predict(X_vali_renorm)
+    rmse = mean_squared_error(Y_vali, preds, squared=False)
+
+    return rmse
+
+cat_params = tune(cat_objective)
+
+#♥main_catboost(param_opt=cat_params)
+
 
 
 
