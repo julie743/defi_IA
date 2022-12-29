@@ -131,7 +131,7 @@ def Optimize_boosting_lr_max_depth(X_train, Y_train, n_estimators_opt) :
 
     '''
     tps0=time.perf_counter()
-    param=[{"learning_rate":[0.01,0.05,0.1], "max_depth": [26]}] 
+    param=[{"learning_rate":[0.01,0.05,0.1], "max_depth": [15,20,25,30]}] 
     model= GridSearchCV(GradientBoostingRegressor(n_estimators=n_estimators_opt),param,cv=5,n_jobs=-1, verbose = 3)
     boostOpt=model.fit(X_train, Y_train)
     tps1=time.perf_counter()
