@@ -37,18 +37,19 @@ parking = gr.inputs.Slider(minimum=0, maximum=1, step=1, label="Parking availabl
 pool = gr.inputs.Slider(minimum=0, maximum=1, step=1, label="Swimming pool available")
 children_policy = gr.inputs.Slider(minimum=0, maximum=2, step=1, label="Select the children policy of the hotel")
 
+#--------------------- Download of the best model weights ---------------------
+os.chdir(PATH_WEIGTHS)
+model = pickle.load(open(filename, 'rb'))
+
 #-------------------------------- Prediction ----------------------------------
 def predict(city,language,mobile,date,hotel_id,stock,group,brand,parking,pool,children_policy):
-    #Download of the best model weights 
-    os.chdir(PATH_WEIGTHS)
-    model = pickle.load(open(filename, 'rb'))
-    
     #Formatting the data into a dataframe 
     avatar_id = 5555555555555
     new = dict(avatar_id=avatar_id, city=city, date=date, language=language, mobile=mobile, hotel_id=hotel_id, stock=stock, group=group, brand=brand, parking=parking, pool=pool, children_policy=children_policy)
     #new = dict(avatar_id=avatar_id, city="paris", date=40, language="dutch", mobile=0, hotel_id=853, stock=110, group="Chillton Worldwide", brand="Tripletree", parking=1, pool=0, children_policy=0)
+    
     new = pd.DataFrame(new, index=[0])
-    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data()
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
     frames = [data, new]
     result = pd.concat(frames)
     X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(result,Y,var_quant,var_quali,var_quali_to_encode)
@@ -56,6 +57,7 @@ def predict(city,language,mobile,date,hotel_id,stock,group,brand,parking,pool,ch
 
     #Making a prediction 
     prediction = model.predict(X_train_renorm.iloc[index])
+    #prediction = 5
     
     return prediction 
 
@@ -75,19 +77,3 @@ if __name__=='__main__':
 - Valeur max du stock 
 - Interpretabilité 
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

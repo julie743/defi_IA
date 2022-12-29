@@ -236,11 +236,51 @@ def main_boosting(opt_nestimators=0, all_param=0) :
 }"""
 
 #Avec param optimaux 
-#main_boosting(opt_nestimators=1500, all_param=0)
+main_boosting(opt_nestimators=1500, all_param=0)
 
 #Sans param optimaux
 #main_boosting()
 
+#----------------------------------- OPTUNA -----------------------------------
+import optuna 
+from sklearn.metrics import mean_squared_error
+SEED = 42
+n_trials = 100
+
+#Function that we will use after to plot the best hyper parameters 
+def tune(objective) :
+    study = optuna.create_study(direction = "minimize")
+    study.optimize(objective, n_trials=n_trials)
+    print('Number of finished trials:', len(study.trials))
+    print('Best trial:', study.best_trial.params)
+    best_params = study.best_trial.params
+    
+    return best_params
+
+def Boosting_objective(trial) :
+    #x_train, x_test, y_train, y_test = train_test_split(data[testons], target, test_size=0.2,random_state=42)    
+    data,Y,var_quant,var_quali,var_quali_to_encode = DL.main_load_data2()
+    X_train,X_vali,X_train_renorm,Y_train,X_vali_renorm,Y_vali,X_test_renorm = DP.main_prepare_train_vali_data(data,Y,var_quant,var_quali,var_quali_to_encode)
+    _n_estimators = trial.suggest_int("n_estimators", 1000, 2500)
+    _learning_rate = trial.suggest_float("learning_rate", 0.01, 0.3)
+    _max_depth = trial.suggest_int("max_depth", 3, 12) 
+    
+    boosting = GradientBoostingRegressor(
+        n_estimators = _n_estimators,  
+        learning_rate = _learning_rate,
+        max_depth = _max_depth,
+    )
+    
+    #early_stopping_rounds avoids overfitting
+    boosting.fit(X_train_renorm,Y_train)
+    preds = boosting.predict(X_vali_renorm)
+    rmse = mean_squared_error(Y_vali, preds, squared=False)
+
+    return rmse
+
+#boosting_params = tune(Boosting_objective)
+
+#main_boosting(param_opt=xgb_params)
 
 
 
