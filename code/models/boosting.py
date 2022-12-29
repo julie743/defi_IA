@@ -224,22 +224,23 @@ def main_boosting(opt_nestimators=0, all_param=0) :
                          "learning_rate": param_opt["learning_rate"],
                          "loss": "squared_error"
                          }  
+    print("fitting model...")
     boost_opt = Model_boosting(X_train_renorm, Y_train, all_param)
     path_weigths = os.path.join(PATH_PROJECT,'weigths','boosting_adversarial.sav')
     pickle.dump(boost_opt, open(path_weigths, 'wb'))
     Predict_validation_set(X_vali,X_vali_renorm,Y_vali,boost_opt,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,boost_opt,model_name)
 
-"""params = {
-    "n_estimators": 1000,
-    "max_depth": 20,
-    "min_samples_split": 5,
-    "learning_rate": 0.01,
-    "loss": "squared_error",
-}"""
+params = {
+        "n_estimators": 1500,
+        "max_depth": 28,
+        "min_samples_split": 5,
+        "learning_rate": 0.01,
+        "loss": "squared_error",
+        }
 
 #Avec param optimaux 
-#main_boosting(opt_nestimators=1500, all_param=0)
+main_boosting(opt_nestimators=1500, all_param=params)
 
 #Sans param optimaux
 #main_boosting()
