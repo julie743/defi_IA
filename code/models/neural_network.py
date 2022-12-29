@@ -52,7 +52,7 @@ def Optimize_NN(X_train, Y_train) :
 
     '''
     tps0=time.perf_counter()
-    param_grid=[{"hidden_layer_sizes":list([(i,) for i in range(30)]), "alpha":[0.5,1,2,5]}]
+    param_grid=[{"hidden_layer_sizes":list([(i,) for i in range(30)]), "alpha":[0.05,0.1,0.5,1,2,5]}]
     nnet= GridSearchCV(MLPRegressor(max_iter=1500),param_grid,cv=10,n_jobs=-1)
     nnetOpt=nnet.fit(X_train, Y_train)
     tps1=time.perf_counter()
