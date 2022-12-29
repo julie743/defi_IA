@@ -20,7 +20,9 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import accuracy_score
 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+
+#PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_PROJECT = "../.."
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')

@@ -8,7 +8,8 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn import tree
 import matplotlib.pyplot as plt
 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+#PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_PROJECT = "../.."
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)

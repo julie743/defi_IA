@@ -4,7 +4,8 @@ import os
 
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
+#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
+PATH_PROJECT = '../..'
 PATH_DATA = os.path.join(PATH_PROJECT,'data/')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 PATH_STOCK_REQUESTS = os.path.join(PATH_DATA,'stock_requetes/')

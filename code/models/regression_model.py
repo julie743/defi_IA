@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/'
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+#PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_PROJECT = "../.."
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)

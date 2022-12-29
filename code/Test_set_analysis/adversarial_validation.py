@@ -7,7 +7,8 @@ from sklearn.metrics import auc
 from sklearn.metrics import roc_curve
 
 #PATH_PROJECT = 'C:\\Users\\alexa\\OneDrive\\Documents\\INSA\\5A\\Defi_IA\\defi_IA\\code\\'
-PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/code'
+#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/code'
+PATH_PROJECT = '../..'
 PATH_UTILITIES = os.path.join(PATH_PROJECT, 'utilities')
 sys.path.append(PATH_UTILITIES)
 os.chdir(PATH_UTILITIES)

@@ -7,9 +7,12 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import GradientBoostingRegressor
 import pickle
 
+os.chdir('../utilities/')
+from set_path import PATH_PROJECT
+
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
+#PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
@@ -236,12 +239,13 @@ def main_boosting(opt_nestimators=0, all_param=0) :
 }"""
 
 #Avec param optimaux 
-main_boosting(opt_nestimators=1500, all_param=0)
+#main_boosting(opt_nestimators=1500, all_param=0)
 
 #Sans param optimaux
 #main_boosting()
 
 #----------------------------------- OPTUNA -----------------------------------
+'''
 import optuna 
 from sklearn.metrics import mean_squared_error
 SEED = 42
@@ -281,8 +285,7 @@ def Boosting_objective(trial) :
 #boosting_params = tune(Boosting_objective)
 
 #main_boosting(param_opt=xgb_params)
-
-
+'''
 
 
 

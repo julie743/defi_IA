@@ -5,9 +5,13 @@ import os
 import time
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import AdaBoostRegressor
+
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/'
+#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/'
+#os.chdir('../utilities/')
+
+PATH_PROJECT = '../..'
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
@@ -106,7 +110,7 @@ def main_adaboost(param_opt=0) :
 #main_adaboost(param_opt=params)
 
 #Sans param optimaux
-main_adaboost()
+#main_adaboost()
 
 
 
