@@ -137,6 +137,9 @@ def main_Linear():
     scores = Predict_validation_set(X_vali,X_vali_renorm,Y_vali,regLin,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,regLin,model_name)
     
+    
+#main_Linear()
+
 def main_Lasso():
     '''
     main function : calls the previous functions in the correct order to 
