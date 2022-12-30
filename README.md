@@ -1,5 +1,12 @@
 Lien vers l'Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb 
 
+- **Docker: **
+    Dans le cadre de ce projet, nous avons développé une application sur **Gradio**, vous pouvez télécharger l'image de cette application en cliquant sur [ce lien](https://hub.docker.com/layers/thiresias/defi_ia2023/latest/images/sha256-bb124b4ddca3ed85f0391df1d854b257610ec3ef859d75a34efbd80e0ffbe40a?context=repo)
+    Une fois l'image télchargée, créez un nouveau conteneur en entrant la commande suivante:
+        - `docker run -p 8000:8000 my-gradio-app`
+    Une fois dans votre conteneur, vous pouvez lancer l'application avec la ligne de commande suivante:
+        - `python app/code/gradio/gradio_main.py`
+
 Organisation du Github :
 -------------------------------------------------------
 **1. Dossier code : tous les codes développés pour le défi IA :**
@@ -23,7 +30,7 @@ Organisation du Github :
     - stacking.py et naive_stacking : combiner les modèles construits pour obtenir un meilleur modèle
     
 - **gradio :** 
-    - gradio.py 
+    - gradio_main.py 
     - gradio.ipynb
 
 - **Test_set_analysis :**
