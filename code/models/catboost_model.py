@@ -5,15 +5,16 @@ import os
 import time
 from sklearn.model_selection import GridSearchCV
 from catboost import CatBoostRegressor
+import sys
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/'
-PATH_PROJECT = "../.."
+PATH_PROJECT = './'
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
 
 os.chdir(PATH_UTILITIES)
+sys.path.insert(1, './')
 
 import data_loading as DL
 import data_preparation_for_models as DP
@@ -68,12 +69,12 @@ def Optimize_catboost(X_train, Y_train) :
 
 def Model_catboost(X_train,Y_train,param_opt):
     all_param = {
-        "n_estimators": 500,
+        "n_estimators": param_opt["n_estimators"],
         "max_depth": param_opt["max_depth"],
-        "min_samples_split": 5,
+        # "min_samples_split": 5,
         "learning_rate":  param_opt["learning_rate"],
         #"loss": "squared_error",
-        "loss": "ls",
+        # "loss": "ls",
     }
     
     tps0=time.perf_counter()
@@ -91,9 +92,9 @@ def main_catboost(param_opt=0) :
     model_name = 'catboost_adversarial'
     if param_opt == 0 :
         param_opt = Optimize_catboost(X_train_renorm, Y_train)
-    #cat_opt = Model_catboost(X_train_renorm, Y_train, param_opt)
-    #Predict_validation_set(X_vali,X_vali_renorm,Y_vali,cat_opt,var_quant,var_quali,model_name)
-    #Predict_test_set(X_test_renorm,cat_opt,model_name)
+    cat_opt = Model_catboost(X_train_renorm, Y_train, param_opt)
+    Predict_validation_set(X_vali,X_vali_renorm,Y_vali,cat_opt,var_quant,var_quali,model_name)
+    Predict_test_set(X_test_renorm,cat_opt,model_name)
 
 """params = {
     "n_estimators": 1000,
@@ -146,9 +147,9 @@ def cat_objective(trial) :
 
     return rmse
 
-cat_params = tune(cat_objective)
-
-#♥main_catboost(param_opt=cat_params)
+# cat_params = tune(cat_objective)
+cat_params = {'n_estimators': 2478, 'learning_rate': 0.29014147234242005, 'max_depth': 10}
+main_catboost(param_opt=cat_params)
 
 
 
