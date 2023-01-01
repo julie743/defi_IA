@@ -7,6 +7,16 @@ Lien vers l'Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb
     - Une fois dans votre conteneur, vous pouvez lancer l'application avec la ligne de commande suivante:
         - `python app/code/gradio/gradio_main.py`
 
+
+- **Docker :** (VERSION JULIE, j'attends de voir si t'es d'accord alexandre)
+    - Dans le cadre de ce projet, nous avons développé une application sur **Gradio**. Pour pouvoir la lancer en utilisant un container docker, il faut avoir préalablement téléchargé Docker Desktop.
+    - Placez vous dans le dossier defi_IA
+    - Téléchargez l'image du docker file en tapant la commande suivante : docker pull thiresias/defi_ia2023:latest.
+    - Ouvrez l'application Docker Desktop, sous l'onglet container vous allez voir le container que vous venez d'ouvrir. Sous l'onglet ACTIONS, cliquez sur "Open in terminal". Une fenêtre s'ouvre. 
+    - Dans cette fenêtre tapez la commande suivante : python app/code/gradio/gradio_main.py.
+    - Suite à cette commande, deux liens https apparaissent dans le terminal, cliquez sur le lien correspondant à "Running on public URL".
+    - Une page interet s'ouvre, dans laquelle vous pouvez utiliser l'application Gradio.
+    
 Organisation du Github :
 -------------------------------------------------------
 **1. Dossier code : tous les codes développés pour le défi IA :**
