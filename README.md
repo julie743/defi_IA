@@ -104,14 +104,15 @@ Meilleurs paramètres et résultats obtenus avec les modèles implémentés:
     - Paramètres : 'n_estimators' : 500, 'alpha': 0.5, 'hidden_layer_sizes': (18,)
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - XGBoost : RMSE = 27.34
-    - Paramètres (Optuna) : 'n_estimators': 2472, 'learning_rate': 0.2910994859019445, 'max_depth': 7
+    - Paramètres (Optuna, 5000 trials) : 'n_estimators': 2472, 'learning_rate': 0.2910994859019445, 'max_depth': 7
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - Carboost : RMSE = 26.27
     - Paramètres (Optuna) : 'n_estimators': 2478, 'learning_rate': 0.29014147234242005, 'max_depth': 10
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - LGBM : RMSE = A REMPLIR 
-    - Paramètres (Optuna) : A REMPLIR 
+    - Paramètres (Optuna, 5000 trials) : A REMPLIR 
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
+
 ## To do 
 - Gradio (OK) : faire le ReadME
 - Dockerfile 
