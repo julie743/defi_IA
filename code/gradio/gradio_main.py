@@ -45,9 +45,23 @@ os.chdir("../../../" + PATH_WEIGTHS)
 model = pickle.load(open(filename, 'rb'))
 
 #-------------------------------- Prediction ----------------------------------
-def predict(city,language,mobile,date,hotel_id,stock,group,brand,parking,pool,children_policy):
+def predict(city,language,mobile,date,hotel_id,stock,brand,parking,pool,children_policy):
     #Formatting the data into a dataframe 
     avatar_id = 5555555555555
+    
+    #corresponding groups for brands
+    groups = {'Ibas' : 'Accar Hotels', 'Marcure' : 'Accar Hotels', 'Navatel': 'Accar Hotels', 'Safitel' : 'Accar Hotels', 
+          'Boss Western' : 'Boss Western', 'J.Halliday Inn' : 'Boss Western', 
+          'Chill Garden Inn' : 'Chillton Worldwide', 'Quadrupletree' : 'Chillton Worldwide', 'Tripletree' : 'Chillton Worldwide', 
+          'Independant': 'Independant', 
+          'Corlton' : 'Morriott International', 'CourtYord' : 'Morriott International', 'Morriot' : 'Morriott International', 
+          '8 Premium' : 'Yin Yang', 'Ardisson' : 'Yin Yang', 'Royal Lotus' : 'Yin Yang'}
+    
+    #formatting brand in case of typing errors (handling extra spaces and upper/lower case character) 
+    brand = " ".join(brand.title().split())
+    
+    group = groups[brand]
+    
     new = dict(avatar_id=avatar_id, city=city, date=date, language=language, mobile=mobile, hotel_id=hotel_id, stock=stock, group=group, brand=brand, parking=parking, pool=pool, children_policy=children_policy)
     #new = dict(avatar_id=avatar_id, city="paris", date=40, language="dutch", mobile=0, hotel_id=853, stock=110, group="Chillton Worldwide", brand="Tripletree", parking=1, pool=0, children_policy=0)
     
@@ -68,7 +82,7 @@ def predict(city,language,mobile,date,hotel_id,stock,group,brand,parking,pool,ch
 if __name__=='__main__':
     interface = gr.Interface(
     fn=predict,
-    inputs=[city,language,mobile,date,hotel_id,stock,"text","text",parking,pool,children_policy],
+    inputs=[city,language,mobile,date,hotel_id,stock,"text",parking,pool,children_policy],
     outputs=["text"],   
     title="Hotel price prediction - defi IA 2023",
     description="To predict the price of a hotel, please enter the necessary information"
@@ -80,3 +94,19 @@ if __name__=='__main__':
 - Valeur max du stock 
 - Interpretabilité 
 """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
