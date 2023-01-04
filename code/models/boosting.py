@@ -8,7 +8,6 @@ from sklearn.ensemble import GradientBoostingRegressor
 import pickle
 
 
-
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
 #PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
