@@ -106,12 +106,6 @@ Meilleurs paramètres et résultats obtenus avec les modèles implémentés:
 - Carboost : RMSE = 26.27
     - Paramètres (Optuna) : 'n_estimators': 2478, 'learning_rate': 0.29014147234242005, 'max_depth': 10
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-- LGBM : RMSE = A REMPLIR 
-    - Paramètres (Optuna, 5000 trials) : A REMPLIR 
+- LGBM : RMSE = 29.11 
+    - Paramètres (Optuna, 5000 trials) : 'n_estimators': 1973, 'learning_rate': 0.2867571924057477, 'num_leaves': 720, 'max_depth': 12, 'min_data_in_leaf': 200, max_bin': 222
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-
-## To do 
-- Gradio (OK) : faire le ReadME
-- Dockerfile 
-- Faire tourner l'interprétabilité 
-- ReadME Projet 
