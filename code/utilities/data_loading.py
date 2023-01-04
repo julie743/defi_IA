@@ -40,7 +40,7 @@ def load_data2() :
     '''
 
     path = os.path.join(PATH_DATA,'adversarial_validation_data/')
-    f = os.listdir(path)[1]
+    f = "selected_train_data_with_price.csv"
     file = os.path.join(path,f)
     data = pd.DataFrame(pd.read_csv(file))
     #tmp = pd.DataFrame(dict({'avatar_id':np.ones((len(data)))}))
