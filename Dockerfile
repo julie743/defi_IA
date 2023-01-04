@@ -1,16 +1,20 @@
 # Use an official Python runtime as a parent image
-FROM ubuntu:latest
+FROM python:3.8
 
-# Set up the local zone and UTC info
-ENV TZ=Europe/Paris
-RUN ln -snf /usr/share/zoneinfo/$TZ/etc/localtime && echo $TZ > /etc/timezone
+RUN pwd
+RUN ls
+# Set the working directory to /app
+WORKDIR ./
 
-# build instructions 
-RUN apt-get update && apt-get install -y \
-python3-pip
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r /app/requirements.txt
 
+# Make port 80 available to the world outside this container
+EXPOSE 80
 
+# Run app.py when the container launches
+CMD ["python", "./app/code/gradio/gradio_main.py"]
