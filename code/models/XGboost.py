@@ -7,10 +7,7 @@ from sklearn.model_selection import GridSearchCV
 
 import xgboost as xgb 
 
-#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = "../.."
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
@@ -19,12 +16,11 @@ PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 file_name = "rf_weigths_opt"""
 
 os.chdir(PATH_UTILITIES)
-
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
-
+os.chdir(PATH_PROJECT)
 
 def xgboost_reg(X_train,Y_train,X_vali,Y_vali,params) : 
     xgboost = xgb.XGBRegressor(**params)
@@ -120,7 +116,7 @@ def main_xgboost(param_opt=0) :
 main_xgboost(param_opt=params)"""
 
 #Sans param optimaux
-main_xgboost()
+#main_xgboost()
 
 
 

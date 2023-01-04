@@ -8,10 +8,7 @@ import pickle
 
 import lightgbm as lgbm
 
-#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = "../.."
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
@@ -20,11 +17,11 @@ directory_weigths = os.path.join(PATH_PROJECT,'weigths')
 filename = 'finalized_model.sav'
 
 os.chdir(PATH_UTILITIES)
-
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
+os.chdir(PATH_PROJECT)
 
 
 def LGBM_reg(X_train,Y_train,X_vali,Y_vali,params) : 

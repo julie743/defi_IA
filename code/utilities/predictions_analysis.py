@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.metrics import r2_score
-from data_loading import PATH_PROJECT
 import os
 
+PATH_PROJECT = PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 
 '''

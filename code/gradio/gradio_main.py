@@ -7,8 +7,6 @@ import pickle
 import os
 import sys
 
-#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 PATH_PROJECT = './app/'
 sys.path.insert(1, './')
 

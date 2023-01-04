@@ -7,20 +7,15 @@ from sklearn.linear_model import RidgeCV
 from catboost import CatBoostRegressor
 import pickle
 
-#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_PROJECT = "../.."
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
 os.chdir(PATH_UTILITIES)
-
-os.chdir(PATH_UTILITIES)
-
 import data_loading as DL
 import data_preparation_for_models as DP
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
-
+os.chdir(PATH_PROJECT)
 
 # models : -------------------------------------------------------------------
 nn = MLPRegressor(random_state=1, max_iter=1500, alpha=0.5,hidden_layer_sizes=18)

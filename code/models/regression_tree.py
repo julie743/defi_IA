@@ -8,17 +8,17 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn import tree
 import matplotlib.pyplot as plt
 
-#PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_PROJECT = "../.."
+
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)
-
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
+os.chdir(PATH_PROJECT)
 
 # regression tree--------------------------------------------------------------
 # 1. Optimisation

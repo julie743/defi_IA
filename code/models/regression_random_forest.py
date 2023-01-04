@@ -6,11 +6,8 @@ import time
 from sklearn.model_selection import GridSearchCV
 
 from sklearn.ensemble import RandomForestRegressor
-
-#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = "../.."
+ 
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
@@ -19,12 +16,11 @@ PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 file_name = "rf_weigths_opt"""
 
 os.chdir(PATH_UTILITIES)
-
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
-
+os.chdir(PATH_PROJECT)
 
 def random_forest(X_train,Y_train,X_vali,Y_vali,params) : 
     reg = RandomForestRegressor(**params)

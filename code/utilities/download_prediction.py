@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import os 
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 
 def download_pred_Xtest(Y_pred,name_model) :
     '''
@@ -22,4 +24,6 @@ def download_pred_Xtest(Y_pred,name_model) :
     df_pred = pd.DataFrame({'price' : Y_pred})
     df_pred['index'] = df_pred.index
     df_pred = df_pred[['index','price']]
-    df_pred.to_csv('../../predictions/' + name_model + '.csv',index=False)
+    path_PRED = os.path.join(PATH_PROJECT,'predictions/')
+    file_name = name_model + '.csv'
+    df_pred.to_csv(os.path.join(path_PRED,file_name),index=False)

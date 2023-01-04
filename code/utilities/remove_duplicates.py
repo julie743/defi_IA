@@ -2,10 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 
-#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
-#PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = '../..'
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_DATA = os.path.join(PATH_PROJECT,'data/')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 PATH_STOCK_REQUESTS = os.path.join(PATH_DATA,'stock_requetes/')

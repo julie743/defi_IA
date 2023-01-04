@@ -17,18 +17,16 @@ from sklearn.tree import DecisionTreeRegressor
 from catboost import CatBoostRegressor
 
 
-#PATH_PROJECT = '/home/julie/Documents/cours/5A/IAF/defi_IA'
-PATH_PROJECT = "../.."
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)
-
 import data_loading as DL
 import data_preparation_for_models as DP
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
-
+os.chdir(PATH_PROJECT)
 
 # load model's weigths 
 def voting_model(X_train,Y_train, ranking = [1,1]) :
