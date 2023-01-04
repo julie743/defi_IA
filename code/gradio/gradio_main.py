@@ -9,7 +9,8 @@ import sys
 
 #PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 #sys.path.insert(1, './')
-PATH_PROJECT = './app'
+#PATH_PROJECT = './app'
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 
 #Weigths 
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
@@ -21,6 +22,8 @@ os.chdir(PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
+os.chdir(PATH_PROJECT)
+
 from download_prediction import download_pred_Xtest
 
 #--------------------- Information regarding the request ----------------------
