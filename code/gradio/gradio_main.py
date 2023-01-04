@@ -12,7 +12,7 @@ sys.path.insert(1, './')
 
 #Weigths 
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
-filename = 'finalized_model.sav'
+filename = 'average_models_adverserial.sav'
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 os.chdir(PATH_UTILITIES)
