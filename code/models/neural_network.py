@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import os
 import time
 import pickle
-
+import sys
 
 from sklearn.model_selection import GridSearchCV
 
@@ -25,14 +25,13 @@ PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
-os.chdir(PATH_UTILITIES)
 
+sys.path.insert(1, PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
-os.chdir(PATH_PROJECT)
 
 
 def Optimize_NN(X_train, Y_train) :

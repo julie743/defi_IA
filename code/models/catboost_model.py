@@ -13,14 +13,12 @@ PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
 
-os.chdir(PATH_UTILITIES)
-#sys.path.insert(1, './')
+sys.path.insert(1, PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
-os.chdir(PATH_PROJECT)
 
 def catboost(X_train,Y_train,X_vali,Y_vali,params) : 
     reg = CatBoostRegressor(**params)

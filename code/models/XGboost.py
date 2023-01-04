@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import time
 from sklearn.model_selection import GridSearchCV
-
+import sys
 import xgboost as xgb 
 
 PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
@@ -15,12 +15,12 @@ PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 """directory_weigths = os.path.join(PATH_PROJECT,'weigths')
 file_name = "rf_weigths_opt"""
 
-os.chdir(PATH_UTILITIES)
+sys.path.insert(1, PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
-os.chdir(PATH_PROJECT)
+
 
 def xgboost_reg(X_train,Y_train,X_vali,Y_vali,params) : 
     xgboost = xgb.XGBRegressor(**params)

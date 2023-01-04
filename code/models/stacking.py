@@ -3,7 +3,7 @@ import time
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import RidgeCV
-
+import sys
 from catboost import CatBoostRegressor
 import pickle
 
@@ -11,11 +11,11 @@ PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
-os.chdir(PATH_UTILITIES)
+sys.path.insert(1, PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
-os.chdir(PATH_PROJECT)
+
 
 # models : -------------------------------------------------------------------
 nn = MLPRegressor(random_state=1, max_iter=1500, alpha=0.5,hidden_layer_sizes=18)

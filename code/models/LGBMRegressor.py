@@ -5,7 +5,7 @@ import os
 import time
 from sklearn.model_selection import GridSearchCV
 import pickle 
-
+import sys
 import lightgbm as lgbm
 
 PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
@@ -16,12 +16,11 @@ PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 directory_weigths = os.path.join(PATH_PROJECT,'weigths')
 filename = 'finalized_model.sav'
 
-os.chdir(PATH_UTILITIES)
+sys.path.insert(1, PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
 from download_prediction import download_pred_Xtest
-os.chdir(PATH_PROJECT)
 
 
 def LGBM_reg(X_train,Y_train,X_vali,Y_vali,params) : 
