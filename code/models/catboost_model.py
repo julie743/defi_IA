@@ -6,15 +6,16 @@ import time
 from sklearn.model_selection import GridSearchCV
 from catboost import CatBoostRegressor
 import sys
+import pickle
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_PROJECT = './'
+PATH_PROJECT = '../..'
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
 
 
 os.chdir(PATH_UTILITIES)
-sys.path.insert(1, './')
+#sys.path.insert(1, './')
 
 import data_loading as DL
 import data_preparation_for_models as DP
@@ -93,9 +94,15 @@ def main_catboost(param_opt=0) :
     if param_opt == 0 :
         param_opt = Optimize_catboost(X_train_renorm, Y_train)
     cat_opt = Model_catboost(X_train_renorm, Y_train, param_opt)
+    
+    # predict validation and test sets : 
     Predict_validation_set(X_vali,X_vali_renorm,Y_vali,cat_opt,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,cat_opt,model_name)
-
+    
+    # save the model
+    path_weigths = os.path.join(PATH_PROJECT,'weigths','catboost_adversarial.sav')
+    pickle.dump(cat_opt, open(path_weigths, 'wb'))
+    
 """params = {
     "n_estimators": 1000,
     "max_depth": 20,
@@ -144,12 +151,12 @@ def cat_objective(trial) :
     cat.fit(X_train_renorm,Y_train)
     preds = cat.predict(X_vali_renorm)
     rmse = mean_squared_error(Y_vali, preds, squared=False)
-
+    
     return rmse
 
 # cat_params = tune(cat_objective)
-cat_params = {'n_estimators': 2478, 'learning_rate': 0.29014147234242005, 'max_depth': 10}
-main_catboost(param_opt=cat_params)
+# cat_params = {'n_estimators': 2478, 'learning_rate': 0.29014147234242005, 'max_depth': 10}
+# main_catboost(param_opt=cat_params)
 
 
 
