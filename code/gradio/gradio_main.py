@@ -16,14 +16,14 @@ PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
 filename = 'average_models_adverserial.sav'
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities/')
-#os.chdir(PATH_UTILITIES)
+
 
 sys.path.insert(1, PATH_UTILITIES)
 
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
-#os.chdir(PATH_PROJECT)
+
 
 from download_prediction import download_pred_Xtest
 

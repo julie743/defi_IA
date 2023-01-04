@@ -15,18 +15,18 @@ from sklearn.ensemble import VotingRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import DecisionTreeRegressor
 from catboost import CatBoostRegressor
-
+import sys
 
 PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
 PATH_IMAGE = os.path.join(PATH_PROJECT,'images')
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
-os.chdir(PATH_UTILITIES)
+sys.path.insert(1, PATH_UTILITIES)
 import data_loading as DL
 import data_preparation_for_models as DP
 from predict_validation_and_test import Predict_validation_set, Predict_test_set
-os.chdir(PATH_PROJECT)
+
 
 # load model's weigths 
 def voting_model(X_train,Y_train, ranking = [1,1]) :
@@ -90,4 +90,4 @@ def main_average_models(ranking = [1,1]):
     Predict_validation_set(X_vali,X_vali_renorm,Y_vali,ensemble,var_quant,var_quali,model_name)
     Predict_test_set(X_test_renorm,ensemble,model_name)
 
-#main_average_models(ranking = [0.7,0.3])
+main_average_models(ranking = [1,1])
