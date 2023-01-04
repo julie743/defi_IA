@@ -16,6 +16,7 @@ PATH_MODELS = os.path.join(PATH_CODE,'models/')
 PATH_UTILITIES = os.path.join(PATH_CODE,'utilities/')
 PATH_REQUEST_ANALYSIS = os.path.join(PATH_CODE,'request_data_analysis/')
 PATH_TEST_SET_ANALYSIS = os.path.join(PATH_CODE,'Test_set_analysis/')
+PATH_GRADIO = os.path.join(PATH_CODE,'gradio/')
 ALL_PATHS = [PATH_MODELS,PATH_UTILITIES,PATH_REQUEST_ANALYSIS, PATH_TEST_SET_ANALYSIS]
 
 

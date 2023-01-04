@@ -7,8 +7,8 @@ import pickle
 import os
 import sys
 
-PATH_PROJECT = './app/'
-sys.path.insert(1, './')
+PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
+#sys.path.insert(1, './')
 
 #Weigths 
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
