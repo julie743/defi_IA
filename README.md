@@ -94,12 +94,9 @@ Meilleurs paramètres et résultats obtenus avec les modèles implémentés:
 - Arbre de regression : RMSE = 28.11
     - Paramètre : max_depth = 36
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-- Boosting : RMSE = 31.29
-    - Paramètres = "n_estimators": 1500,
-                   "max_depth": 28,
-                   "min_samples_split": 5,
-                   "learning_rate": 0.1,
-                   "loss": "squared_error"
+- Boosting : RMSE = 28.6
+    - Paramètres = {'n_estimators' : 1500, 'learning_rate': 0.09090662548192852, 'max_depth': 12}
+    - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - Neural Network : RMSE = 23.58
     - Paramètres : 'n_estimators' : 500, 'alpha': 0.5, 'hidden_layer_sizes': (18,)
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
