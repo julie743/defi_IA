@@ -45,7 +45,8 @@ children_policy = gr.inputs.Slider(minimum=0, maximum=2, step=1, label="Select t
 #--------------------- Download of the best model weights ---------------------
 print(os.getcwd())
 os.chdir("../../../" + PATH_WEIGTHS)
-model = pickle.load(open(filename, 'rb'))
+file_weigths= os.path.join(PATH_PROJECT,'weigths/',filename)
+model = pickle.load(open(file_weigths, 'rb'))
 
 #-------------------------------- Prediction ----------------------------------
 def predict(city,language,mobile,date,hotel_id,stock,brand,parking,pool,children_policy):
