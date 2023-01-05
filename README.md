@@ -1,23 +1,7 @@
 Lien vers l'Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb 
 
-- **Docker :**
-    - Dans le cadre de ce projet, nous avons développé une application sur **Gradio**, vous pouvez télécharger l'image de cette application en cliquant sur [ce lien](https://hub.docker.com/layers/thiresias/defi_ia2023/latest/images/sha256-bb124b4ddca3ed85f0391df1d854b257610ec3ef859d75a34efbd80e0ffbe40a?context=repo)
-    - Une fois l'image télchargée, créez un nouveau conteneur en entrant la commande suivante:
-        - `docker run -p 8000:8000 thiresias/defi_ia2023`
-    - Une fois dans votre conteneur, vous pouvez lancer l'application avec la ligne de commande suivante:
-        - `python app/code/gradio/gradio_main.py`
-
-
-- **Docker :** (VERSION JULIE, j'attends de voir si t'es d'accord alexandre)
-    - Dans le cadre de ce projet, nous avons développé une application sur **Gradio**. Pour pouvoir la lancer en utilisant un container docker, il faut avoir préalablement téléchargé Docker Desktop.
-    - Placez vous dans le dossier defi_IA
-    - Téléchargez l'image du docker file en tapant la commande suivante : docker pull thiresias/defi_ia2023:latest.
-    - Ouvrez l'application Docker Desktop, sous l'onglet container vous allez voir le container que vous venez d'ouvrir. Sous l'onglet ACTIONS, cliquez sur "Open in terminal". Une fenêtre s'ouvre. 
-    - Dans cette fenêtre tapez la commande suivante : python app/code/gradio/gradio_main.py.
-    - Suite à cette commande, deux liens https apparaissent dans le terminal, cliquez sur le lien correspondant à "Running on public URL".
-    - Une page interet s'ouvre, dans laquelle vous pouvez utiliser l'application Gradio.
  
- - **Docker :** (DERNIERE VERSION) 
+ - **Docker :**  
  **Etapes pour l'utilisation de docker avec gcloud :**
 
 1. Créer une instance de VM sur Gcloud.
