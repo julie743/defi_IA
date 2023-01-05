@@ -16,8 +16,6 @@ PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
 filename = 'average_models_adverserial.sav'
 
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities/')
-
-
 sys.path.insert(1, PATH_UTILITIES)
 
 import data_loading as DL
@@ -44,7 +42,7 @@ children_policy = gr.inputs.Slider(minimum=0, maximum=2, step=1, label="Select t
 
 #--------------------- Download of the best model weights ---------------------
 print(os.getcwd())
-os.chdir("../../../" + PATH_WEIGTHS)
+#os.chdir("../../../" + PATH_WEIGTHS)
 file_weigths= os.path.join(PATH_PROJECT,'weigths/',filename)
 model = pickle.load(open(file_weigths, 'rb'))
 
