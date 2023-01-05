@@ -7,22 +7,26 @@ import pickle
 import os
 import sys
 
-#PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
-#PATH_PROJECT = './app'
-PATH_PROJECT = open("set_path.txt",'r').readlines()[0]
+#Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
+#Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
+PATH_PROJECT = './app/'
+sys.path.insert(1, './')
 
 #Weigths 
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
-filename = 'average_models_adverserial.sav'
+filename = 'finalized_model.sav'
 
+<<<<<<< HEAD
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities/')
 sys.path.insert(1, PATH_UTILITIES)
+=======
+PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
+os.chdir(PATH_UTILITIES)
+>>>>>>> 06c12415a7c9594d2951bab2db73876932fb6b4a
 
 import data_loading as DL
 import data_preparation_for_models as DP
 import predictions_analysis as PA
-
-
 from download_prediction import download_pred_Xtest
 
 #--------------------- Information regarding the request ----------------------
@@ -75,7 +79,7 @@ def predict(city,language,mobile,date,hotel_id,stock,brand,parking,pool,children
     index = X_train[X_train["avatar_id"]==avatar_id].index
 
     #Making a prediction 
-    prediction = np.exp(model.predict(X_train_renorm.iloc[index]))
+    prediction = model.predict(X_train_renorm.iloc[index])
     #prediction = 5
     
     return prediction 
@@ -91,10 +95,13 @@ if __name__=='__main__':
 ).launch(debug=True, share=True)
 
 
-"""A finaliser : 
+"""
+
+A finaliser : 
 - Format écriture brand et group ==> majuscule pour la premiere lettre puis minuscule 
 - Valeur max du stock 
 - Interpretabilité 
+
 """
 
 
