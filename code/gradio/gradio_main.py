@@ -16,13 +16,8 @@ sys.path.insert(1, './')
 PATH_WEIGTHS = os.path.join(PATH_PROJECT,'weigths')
 filename = 'finalized_model.sav'
 
-<<<<<<< HEAD
 PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities/')
 sys.path.insert(1, PATH_UTILITIES)
-=======
-PATH_UTILITIES = os.path.join(PATH_PROJECT,'code/utilities')
-os.chdir(PATH_UTILITIES)
->>>>>>> 06c12415a7c9594d2951bab2db73876932fb6b4a
 
 import data_loading as DL
 import data_preparation_for_models as DP
