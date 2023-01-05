@@ -73,7 +73,7 @@ def predict(city,language,mobile,date,hotel_id,stock,brand,parking,pool,children
     index = X_train[X_train["avatar_id"]==avatar_id].index
 
     #Making a prediction 
-    prediction = model.predict(X_train_renorm.iloc[index])
+    prediction = np.exp(model.predict(X_train_renorm.iloc[index]))
     #prediction = 5
     
     return prediction 

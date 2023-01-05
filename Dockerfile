@@ -18,3 +18,4 @@ RUN pip install category_encoders==2.5.1.post0
 RUN pip install catboost==1.1.1
 RUN pip install gradio==3.15.0
 RUN pip install matplotlib==3.6.2
+RUN pip install lightgbm==3.3.4
