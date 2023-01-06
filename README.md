@@ -75,7 +75,6 @@ Organisation du Github :
     
 - **gradio :** 
     - gradio_main.py 
-    - gradio.ipynb
 
 - **Test_set_analysis :**
     - Test_set_analysis.ipynb : analyse de données des 17% du jeu de test
