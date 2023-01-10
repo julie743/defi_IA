@@ -27,7 +27,6 @@ Remarque : Si on fait un ls, on voit que l'on a bien tous nos fichiers du projet
 10. Run le fichier set_path.py avec la comande suivante : `python3 set_path.py`
 Cela permet de changer le path de référence dans tous les fichiers. 
 
-
 Pour run le gradio avec le modèle déjà entrainé, continuer en suivant les indications 11 à 14 :
 
 11. Se déplacer dans le dossier contenant le gradio avec la commande suivante : `cd code/gradio/`
@@ -82,10 +81,10 @@ Organisation du Github :
     - Adversarial_validation.ipynb
 
 **2. Dossier data :**
-    - adversarial_validation_data : données sélectionnées par l'adversarial validation network
-    - all_data : toutes les données requêtées concaténées en un dataframe, set de test, features des hotels
-    - results_requests : résultats des requêtes par semaines
-    - stocks_requetes : liste des requêtes effectuées chaque semaine
+- adversarial_validation_data : données sélectionnées par l'adversarial validation network
+- all_data : toutes les données requêtées concaténées en un dataframe, set de test, features des hotels
+- results_requests : résultats des requêtes par semaines
+- stocks_requetes : liste des requêtes effectuées chaque semaine
     
 **3. Dossier images :** contient les graphes d'analyse des résultats de chaque modèle sur l'échantillon de validation (chaque modèle a son propre sous dossier)
 
@@ -107,8 +106,8 @@ Meilleurs paramètres et résultats obtenus avec les modèles implémentés:
     - Paramètre : max_depth = 36
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - Boosting : RMSE = 26.86
-    - Paramètres : "n_estimators": 1000,
-                   "max_depth": 20,
+    - Paramètres : "n_estimators": 1500,
+                   "max_depth": 28,
                    "min_samples_split": 5,
                    "learning_rate": 0.05,
                    "loss": "squared_error"
