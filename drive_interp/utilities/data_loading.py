@@ -5,7 +5,8 @@ import os
 #Path Julie : '/home/julie/Documents/cours/5A/IAF/defi_IA'
 #Path Eva : 'C:/Users/evaet/Documents/5A/defi_IA/' 
 PATH_PROJECT = 'C:/Users/evaet/Documents/5A/defi_IA/' 
-PATH_DATA = os.path.join(PATH_PROJECT,'data/')
+#PATH_DATA = os.path.join(PATH_PROJECT,'data/')
+PATH_DATA = '/content/drive/MyDrive/defiIA_tmp/'
 
 #Basic requests  
 def load_data() : 
