@@ -1,7 +1,18 @@
 Lien vers l'Ovearleaf : https://fr.overleaf.com/7884867438ppyjpxpjnfmb 
 
+Utilisation du Github - fichiers requis pour l'évaluation du projet:
+------------------------------------------------------
+- `git pull https://github.com/julie743/defi_IA.git`
+- La première chose à faire est de mettre à jour les paths du projet. Pour ce faire, se placer dans le dossier defi_IA et lancer le code set_path.py par la commande suivante : `python3 set_path.py`. Ce code permet de récupérer l'adresse de la racine du projet où vous l'avez enregistré et met à jour le path dans le fichiers  `set_path.txt` présent dans plusieurs sous dossiers du répertoire **code**. Par la suite, tous les codes font appel à ce ficier pour obtenir le path, il n'y a donc pas d'autre modification à faire pour run l'ensemble des codes du projets.  
+- Le modèle final que nous avons sélectionné est le modèle de vote (nomé average_model dans le github) qui combine les modèles Catboost et Neural Network. Le fichier qui nous a permis de l'entrainer est dans le fichier `code/models/average_models.py` (-> correspond au fichier `train.py` requis pour l'évaluation). Les poids de ce modèle sont également enregistrés dans le dossier `weights/average_models_adversarial.sav`
+- Le code pour lancer le gradio se trouve dans le fichier `code/gradio/gradio.py`. Run le code `gradio.py` pour lancer le gradio en local. Deux url apparaissent, copier le lien public dans un navigateur. L'interface gradio s'ouvre, vous pouvez sélectionner les options et soumettre la proposition pour obtenir la prédiction du modèle final. 
+- Le notebook d'analyse des résultats du modèle final se trouve dans le notebook `code/models/average_models.py`. Le notebbok d'interprétabilité se trouve dans `drive_interp/Interpretability.ypnb`, il a été run sur google collab.
+- Le `Dockerfile` se trouve à la racine du projet, ci-dessous les instructions pour le construire. 
+
+-------------------------------------------------------------------------------------------------
  
- - **Docker :**  
+ Docker :
+ -------------------------------------------------------
  **Etapes pour l'utilisation de docker avec gcloud :**
 
 1. Créer une instance de VM sur Gcloud.
@@ -50,7 +61,7 @@ Pour faire l'entrainement du modèle, continuer en suivant les indications 15 à
 Fin : Pour sortir du container faire la commande ctrl-C ctrl-D. A la fin de l'utilisation du docker, ne pas oublier de désactiver l'instance de VM sur gcloud : cliquer sur "..." -> "Arrêter". 
  
  
- ------------------------------------------------------
+------------------------------------------------------
  
 Organisation du Github :
 -------------------------------------------------------
@@ -100,9 +111,10 @@ Organisation du Github :
 
 **6. drive_interp :** sous dossier qui contient les éléments dont on a besoin pour faire l'interprétation du modèle final. Le code a été réalisé sur google collab car les temps de calcul étaient trop important pour le réaliser en local comme le reste du projet. 
 
+--------------------------------------------------------------------------------------------------
 
-Meilleurs paramètres et résultats obtenus avec les modèles implémentés: 
--------------------------------------------------------
+Résultats : Meilleurs paramètres et résultats obtenus avec les modèles implémentés: 
+---------------------------------------------------------------------------------
 
 1. Résultats sur le jeu de données avec la variable hotel_ID target encodée et la nouvelle variable cost_life
 - Regression linéaire : RMSE = 31.64 
