@@ -134,8 +134,7 @@ Résultats : Meilleurs paramètres et résultats obtenus avec les modèles impl�
 - Neural Network : RMSE = 30.21
     - Paramètres : 'alpha': 0.5, 'hidden_layer_sizes': (28,)
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
-- Foret aléatoire : RMSE = 28.21 (pas à jour je crois ?)
-- Foret aléatoire optimisée : RMSE = 28.20 (pas à jour je crois ?)
+- Foret aléatoire : RMSE = 28.20
 
 2. Résultats sur le jeu de données sélectionné par l'adversarial network : 
 - Regression linéaire : RMSE = 28.39 
@@ -159,4 +158,7 @@ Résultats : Meilleurs paramètres et résultats obtenus avec les modèles impl�
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
 - LGBM : RMSE = 29.11 
     - Paramètres (Optuna, 5000 trials) : 'n_estimators': 1973, 'learning_rate': 0.2867571924057477, 'num_leaves': 720, 'max_depth': 12, 'min_data_in_leaf': 200, max_bin': 222
+    - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
+- Adaboost : RMSE = 56.51 
+    - Paramètres (Optuna, 200 trials) :  Adaboost : {'n_estimators': 426, 'learning_rate': 0.0955534691912351}
     - Variables : target encoding de hotel_id, one-hot-encoding des autres variables qualitatives + ajout de la variable cost_life
