@@ -38,7 +38,7 @@ Remarque : Si on fait un ls, on voit que l'on a bien tous nos fichiers du projet
 10. Run le fichier set_path.py avec la comande suivante : `python3 set_path.py`
 Cela permet de changer le path de référence dans tous les fichiers. 
 
-Pour run le gradio avec le modèle déjà entrainé, continuer en suivant les indications 11 à 14 :
+**Pour run le gradio avec le modèle déjà entrainé, continuer en suivant les indications 11 à 14 :**
 
 11. Se déplacer dans le dossier contenant le gradio avec la commande suivante : `cd code/gradio/`
 
@@ -50,7 +50,7 @@ Pour run le gradio avec le modèle déjà entrainé, continuer en suivant les in
 
 
 
-Pour faire l'entrainement du modèle, continuer en suivant les indications 15 à :
+**Pour faire l'entrainement du modèle, continuer en suivant les indications 15 à 17:**
 
 15. Se placer dans le fichier du modèle à entrainer : `cd code/models/`
 
