@@ -50,6 +50,8 @@ Pour faire l'entrainement du modèle, continuer en suivant les indications 15 à
 Fin : Pour sortir du container faire la commande ctrl-C ctrl-D. A la fin de l'utilisation du docker, ne pas oublier de désactiver l'instance de VM sur gcloud : cliquer sur "..." -> "Arrêter". 
  
  
+ ------------------------------------------------------
+ 
 Organisation du Github :
 -------------------------------------------------------
 **1. Dossier code : tous les codes développés pour le défi IA :**
@@ -58,7 +60,7 @@ Organisation du Github :
     - data_preparation_for_models.py : mise en forme des données prêtes à être utilisées par les modèles (encodage, renormalisation, split train/validation...)
     - predict_validation_and_test.py : prédiction de l'échantillon de test et de validation (adapté à tous les modèles développés)
     - create_new_features.py : création de nouvelle variable, 
-    - dowload_prediction.py : enregistrer la prédiction des données test au format accepté par kaggle
+    - download_prediction.py : enregistrer la prédiction des données test au format accepté par kaggle
     - predictions_analysis.py : calculer les scores de prédiction + tracer les graphes pour l'analyse des résultats des modèles
     - remove_duplicates : enlever les doublons dans le jeu d'entrainement 
 
@@ -66,14 +68,14 @@ Organisation du Github :
     - data_analysis_request.ypnb : analyse de données des données requêtées 
 
 - **models :** tous les modèles développés. 
-    - modèles développés : linear regression, LASSO, regression tree, random forest, neural network, boosting, catboost, adaboost, XGboost
+    - modèles développés : linear regression, LASSO, regression tree, random forest, neural network, boosting, catboost, adaboost, XGboost, average model (modèle de vote), stacking model
     - Pour chaque modèle il y a : 
         - un fichier .py qui contient les fonctions pour créer et le modèle, trouver les paramètres optimaux 
         - un fichier .ipynb qui contient la liste des paramètres optimaux trouvés + l'analyse des résultats du modèle sur l'échantillon de validation
     - stacking.py et naive_stacking : combiner les modèles construits pour obtenir un meilleur modèle
     
 - **gradio :** 
-    - gradio_main.py 
+    - gradio_main.py : code permettant de lancer le gradio. Il utilise le meilleur modèle développé (le modèle de vote du fichier average_models.py)
 
 - **Test_set_analysis :**
     - Test_set_analysis.ipynb : analyse de données des 17% du jeu de test
@@ -90,8 +92,13 @@ Organisation du Github :
 
 **4. Dossier predictions :** contient les fichiers .csv de la prédiction de chaque modèle sur l'échantillon de test (au format accepté par la plateforme kaggle)    
 
-**5. Dossier weigths :** contient les poids des modèles retenus
+**5. Dossier weigths :** contient les poids des modèles retenus sur les données de l'adversarial validation
+- average_models_adversarial.sav : poids du modèle de vote entre catboost et neural network (le modèle final)
+- catboost_adversarial.sav : poids du modèle catboost seul
+- neural_network_adversarial.sav : poids du modèle neural network seul
+- average_models_adversarial.sav : poids du modèle de stacking entre catboost et neural network 
 
+**6. drive_interp :** sous dossier qui contient les éléments dont on a besoin pour faire l'interprétation du modèle final. Le code a été réalisé sur google collab car les temps de calcul étaient trop important pour le réaliser en local comme le reste du projet. 
 
 
 Meilleurs paramètres et résultats obtenus avec les modèles implémentés: 
